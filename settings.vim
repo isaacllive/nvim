@@ -1,6 +1,6 @@
+" Set up commands 
 
-" Set up commands
-" syntax enable                           " Enables syntax highlighing
+:syntax enable                           " Enables syntax highlighing
 :set hidden                              " Required to keep multiple buffers open multiple buffers
 :set nowrap                              " Display long lines as just one line
 :set encoding=utf-8                      " The encoding displayed
@@ -36,8 +36,19 @@
 :set confirm                             " Confirm when exiting without save
 :set lazyredraw                          " Speed up scrolling
 :set wmh=0
-:set noshowmode                          " Dont show mode
-:set shortmess+=c                         " Dont show 'pattern not found prompt 
+:set noshowmode                          " Dont show mode covered by lighline
+:set shortmess+=c                        " Dont show 'pattern not found prompt 
+:set nocompatible
+:filetype plugin on                      " File type recognition for plugin files
+:set foldmethod=marker                   " De   
+:set foldlevel=0                         " Determine fold level
 
-
+" WSL yank support; allows yanks to show in windows clipboard...
+let s:clip = '/c/Windows/System32/clip.exe'  " change this path according to your mount point
+if executable(s:clip)
+  augroup WSLYank
+      autocmd!
+      autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
+  augroup END
+endif
 

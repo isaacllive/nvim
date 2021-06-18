@@ -1,9 +1,12 @@
 
-
 " Insert Mode ------------------------------------------------------
 :imap jj <Esc>
+
+"Format File
+:nnoremap ff <cmd>lua vim.lsp.buf.formatting()<CR>
+
 "Use <Tab> and <S-Tab> to navigate the completion list:
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+:inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Normal Mode -------------------------------------------------------
 :nnoremap <C-p> :Files<CR>
@@ -19,7 +22,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 :noremap <A-h> <C-W>h<C-W><CR>
 :noremap <A-l> <C-W>l<C-W><CR>
 :nmap <C-w> <C-o><C-w>
-:nmap <C-B> <C-v>
+:nmap vv <C-v>
 
 " Terminal Mode ------------------------------------------------------
 :tnoremap <Esc> <C-\><C-n>
@@ -34,14 +37,21 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Automatic Commands 
 
-"Handles Termnial 
-:au BufEnter * if &buftype == 'terminal' | exec 'normal! i' | set nonumber norelativenumber  | endif   "Always enter Terminal in insert mode and Remove numbers
-:au BufEnter * if &buftype != 'terminal' | set number | endif  "Add numbers back when leaving terminal
-:au TermOpen * startinsert
-:au TermOpen * :set nonumber norelativenumber
-:au TermOpen * noremap <buffer> <C-c> i<C-c>
+" Handles Termnial 
+:au BufEnter * if &buftype == 'terminal' 
+  \  | exec 'normal! i'                       " Always enter Terminal in insert mode 
+  \  | set nonumber norelativenumber          " Removes side numbers when using terminal 
+  \  | endif   
+
+:au BufEnter * if &buftype != 'terminal' 
+  \  | set number                             " Add numbers back when leaving terminal 
+  \  | endif  
+
+:au TermOpen * startinsert 
+  \  | :set nonumber norelativenumber         " Insert mode when swiching to terminal 
+  \  | :noremap <buffer> <C-c> i<C-c>         " Allows for C-c escaping process in terminal
+
 
 " Custom commands
-:command! Config e $MYVIMRC
-
+:command! Config e $MYVIMRC                   " Fast Config access
 

@@ -1,7 +1,9 @@
 
 " File for Customizing look n feel of nvim
 
-:colorscheme nord
+" Theme
+:colorscheme nord 
+
 :hi Pmenu blend=0j
 
 " Lightline Modifications
@@ -23,5 +25,6 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 0
 let g:netrw_altv = 1
 let g:netrw_winsize = 20
+
 
 
