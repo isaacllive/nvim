@@ -23,7 +23,7 @@
 :set laststatus=2                        " Always display the status line
 :set number                              " Line numbers
 :set cursorline                          " Enable highlighting of the current line
-:set background=dark                     " tell vim what the background color looks like
+":set background=dark                     " tell vim what the background color looks like
 :set showtabline=2                       " Present Airblade Status Line 
 :set nobackup                            " This is recommended by coc
 :set nowritebackup                       " This is recommended by coc
@@ -51,4 +51,10 @@ if executable(s:clip)
       autocmd TextYankPost * if v:event.operator ==# 'y' | call system(s:clip, @0) | endif
   augroup END
 endif
+
+" Yanking in visual mode copies text to win clipboard
+:vnoremap <y> *y
+
+
+
 
