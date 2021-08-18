@@ -17,13 +17,15 @@ let g:startify_lists = [
   \ { 'type': 'files',  'header': ['   Recent Files']      },
   \ { 'type': 'sessions',  'header': ['   Sessions']       },
   \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
-  \ { 'type': 'commands',  'header': ['   Commands']       },
-  \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
-  \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
+  \ { 'type': 'commands',  'header': ['   Commands']       }
   \ ]
+"  \ { 'type': function('s:gitModified'),  'header': ['   git modified']},
+"  \ { 'type': function('s:gitUntracked'), 'header': ['   git untracked']},
 
 let g:startify_commands = [
-  \ { 't': 'term' }
+  \ { 's': 'OpenSession' },
+  \ { 'f': 'Telescope find_files'}, 
+  \ { 't': 'term' },
   \ ]
 
 let g:startify_bookmarks = [
