@@ -1,4 +1,4 @@
-
+" 
 source ~/.config/nvim/plugin.vim
 
 " General Configurations
@@ -36,5 +36,6 @@ source ~/.config/nvim/settings.vim
   augroup END
   ]], false)
 EOF
+
 
 
