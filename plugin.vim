@@ -2,7 +2,7 @@
 
 " Pluggin Manager
 " ===============================================================
-  :call plug#begin('~/.vim/plugged')
+  :call plug#begin('~/.config/nvim/plugged')
 " ===============================================================
  
   " Apearance 
@@ -57,13 +57,15 @@ let g:AutoPairsFlyMode = 1
 
 " plugins configs
 " :source ~/.config/nvim/plugin_conf/startify.vim
-:source ~/.config/nvim/plugin_conf/dashboard.vim
-:source ~/.config/nvim/plugin_conf/session.vim
+":source ~/.config/nvim/plugin_conf/dashboard.vim
 ":source ~/.config/nvim/plugin_conf/luasnip.vim
 
+:source ~/.config/nvim/plugin_conf/session.vim
+
 " lua pluggin config
-:luafile ~/.config/nvim/lua/refactoring-config.lua
+:luafile ~/.config/nvim/lua/dashboard-config.lua
 :luafile ~/.config/nvim/lua/lsp.lua
+:luafile ~/.config/nvim/lua/refactoring-config.lua
 :luafile ~/.config/nvim/lua/treesitter-config.lua
 :luafile ~/.config/nvim/lua/lsputils-config.lua
 :luafile ~/.config/nvim/lua/compe-config.lua
