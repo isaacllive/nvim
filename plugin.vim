@@ -19,7 +19,6 @@
   Plug 'glepnir/dashboard-nvim'
   Plug 'karb94/neoscroll.nvim'
   Plug 'rcarriga/nvim-notify'
-  "Plug 'romgrk/barbar.nvim'
 
   " Required Libraries 
   Plug 'nvim-lua/plenary.nvim'
@@ -30,7 +29,6 @@
   " Aditional General Functionality
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'neovim/nvim-lspconfig'
-  "Plug 'kabouzeid/nvim-lspinstall"everforest'
   Plug 'williamboman/nvim-lsp-installer'
   Plug 'hrsh7th/nvim-compe'
   Plug 'folke/lsp-trouble.nvim'
@@ -54,11 +52,6 @@
 
 let g:AutoPairsShortcutToggle = '<M-q>'
 let g:AutoPairsFlyMode = 1
-
-" plugins configs
-" :source ~/.config/nvim/plugin_conf/startify.vim
-":source ~/.config/nvim/plugin_conf/dashboard.vim
-":source ~/.config/nvim/plugin_conf/luasnip.vim
 
 :source ~/.config/nvim/plugin_conf/session.vim
 
