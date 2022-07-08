@@ -6,7 +6,7 @@ require('lspkind').init({
     -- default: symbol
     -- options: 'text', 'text_symbol', 'symbol_text', 'symbol'
     mode = 'symbol_text',
-  
+
     -- default symbol map
     -- default: 'default' (nerd-fonts font) or 'codeicons' (vscode-codeicons font)
     --

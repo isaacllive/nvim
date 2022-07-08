@@ -1,3 +1,4 @@
+
 require('refactoring').setup({})
 
 -- Remaps for the refactoring operations currently offered by the plugin

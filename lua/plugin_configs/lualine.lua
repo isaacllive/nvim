@@ -1,11 +1,14 @@
 
-local function currBuff()
-  return vim.api.nvim_exec([[ echo bufnr('%') ]], true)
-end
-
+-- local function currBuff()
+--   return vim.api.nvim_exec([[ echo bufnr('%') ]], true)
+-- end
 
 local function codeAction()
-  return  "" -- require'nvim-lightbulb'.get_status_text()
+  return require'nvim-lightbulb'.get_status_text()
+end
+
+local function session()
+  return require'auto-session-library'.current_session_name()
 end
 
 require'lualine'.setup {
@@ -20,7 +23,7 @@ require'lualine'.setup {
       lualine_a = {'mode'},
       lualine_b = {'branch'},
       lualine_c = {'filename'},
-      lualine_x = {{codeAction}, 'encoding','filetype'},
+      lualine_x = {{codeAction}, session, 'encoding','filetype'},
       lualine_y = {'progress'},
       lualine_z = {'location'}
     },
