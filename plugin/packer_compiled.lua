@@ -89,6 +89,11 @@ _G.packer_plugins = {
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  ["impatient.nvim"] = {
+    loaded = true,
+    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/impatient.nvim",
+    url = "https://github.com/lewis6991/impatient.nvim"
+  },
   ["lsp-trouble.nvim"] = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim",
@@ -104,20 +109,10 @@ _G.packer_plugins = {
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/hoob3rt/lualine.nvim"
   },
-  ["material.nvim"] = {
-    loaded = true,
-    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/material.nvim",
-    url = "https://github.com/marko-cerovac/material.nvim"
-  },
   ["neoscroll.nvim"] = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/neoscroll.nvim",
     url = "https://github.com/karb94/neoscroll.nvim"
-  },
-  ["nord.nvim"] = {
-    loaded = true,
-    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/nord.nvim",
-    url = "https://github.com/shaunsingh/nord.nvim"
   },
   ["nvim-compe"] = {
     loaded = true,
@@ -162,7 +157,7 @@ _G.packer_plugins = {
   ["onedark.nvim"] = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/onedark.nvim",
-    url = "https://github.com/navarasu/onedark.nvim"
+    url = "https://github.com/ful1e5/onedark.nvim"
   },
   ["packer.nvim"] = {
     loaded = true,

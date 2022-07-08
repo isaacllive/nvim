@@ -1,4 +1,5 @@
 
+
 local fn = vim.fn
  -- Auto install Packer.nvim if not found
 local	install_path = fn.stdpath('data')..'site/pack/packer/start/packer.nvim'
@@ -20,23 +21,10 @@ if not status_ok then
   return
 end
 
-require('packer').startup(function()
+packer.startup(function()
 
   -- packer itself
   use 'wbthomason/packer.nvim'
-
-  -- Apearance 
-  use 'sainnhe/sonokai'
-  use 'navarasu/onedark.nvim'
-  use 'kyazdani42/nvim-web-devicons'
-  use 'ap/vim-css-color'
-  use 'hoob3rt/lualine.nvim'
-  use 'marko-cerovac/material.nvim'
-  use 'shaunsingh/nord.nvim'
-
-  use 'glepnir/dashboard-nvim'
-  use 'karb94/neoscroll.nvim'
-  use 'rcarriga/nvim-notify'
 
   -- Required Libraries 
   use 'nvim-lua/plenary.nvim'
@@ -44,7 +32,18 @@ require('packer').startup(function()
   use 'xolox/vim-misc'
   use 'RishabhRD/popfix'
 
+  -- Apearance 
+  use 'sainnhe/sonokai'
+  use 'ful1e5/onedark.nvim'
+  use 'kyazdani42/nvim-web-devicons'
+  use 'ap/vim-css-color'
+  use 'hoob3rt/lualine.nvim'
+  use 'glepnir/dashboard-nvim'
+  use 'karb94/neoscroll.nvim'
+  use 'rcarriga/nvim-notify'
+
   -- Aditional General Functionality
+  use 'lewis6991/impatient.nvim'
   use 'nvim-treesitter/nvim-treesitter'
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
@@ -62,6 +61,7 @@ require('packer').startup(function()
   use 'rmagatti/auto-session'
   use 'ThePrimeagen/refactoring.nvim'
 
+
 	-- Auto set config if packer was auto installed
 	if Packer_Bootstrap then
 		 require('packer').sync()
@@ -69,18 +69,22 @@ require('packer').startup(function()
 
 end)
 
--- lua pluggin config
-require('plugin_configs.dashboard')
+-- lua pluggin configurations
+require('plugin_configs.impatient')
+require('plugin_configs.dashboard')   -- TODO: DESIGN BETTER LOOKING PAGE
 require('plugin_configs.lsp')
-require('plugin_configs.refactoring')
-require('plugin_configs.treesitter')
-require('plugin_configs.lsputils')
-require('plugin_configs.compe')
+require('plugin_configs.lsputils')    -- TODO: CHECK CONF
+require('plugin_configs.treesitter')  -- TODO: CHECK CONF
+require('plugin_configs.refactoring') -- TODO: CHECK CONF
+-- require('plugin_configs.telescope')   -- TODO: FIX ERRORS
+require('plugin_configs.compe')          -- TODO: CHECK CONF
 require('plugin_configs.lsptrouble')
 require('plugin_configs.gitsigns')
--- require('plugin_configs.telescope')
 require('plugin_configs.lspkind')
 require('plugin_configs.lualine')
 require('plugin_configs.neoscroll')
 require('plugin_configs.nvim-notify')
 require('plugin_configs.auto-session')
+
+
+

@@ -51,6 +51,6 @@ vim.cmd([[
   :command! ConfigFile e $MYVIMRC                             " Fast Main kConfig access
   :command! ConfigSSH e ~/.ssh/config                         " Fast SSH Config access
   :command! ConfigPlugins e ~/.config/nvim/lua/plugins.lua    " fast plugin config access
-  :command! ConfigBash e ~/.bashrc                            " fast fish config access
+  :command! ConfigShell e $SHELL_RC                           " fast rc config access
 
 ]])
