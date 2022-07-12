@@ -42,25 +42,27 @@ packer.startup(function()
   use 'karb94/neoscroll.nvim'
   use 'rcarriga/nvim-notify'
 
-  -- Aditional General Functionality
-  use 'lewis6991/impatient.nvim'
-  use 'nvim-treesitter/nvim-treesitter'
+  -- LSP
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
   use 'hrsh7th/nvim-compe'
-  use 'folke/lsp-trouble.nvim'
   use 'RishabhRD/nvim-lsputils'
+
+  -- Aditional  Functionality
+  use 'lewis6991/impatient.nvim'
+  use 'nvim-treesitter/nvim-treesitter'
+  use 'folke/lsp-trouble.nvim'
   use 'kosayoda/nvim-lightbulb'
   use 'onsails/lspkind-nvim'
   use 'jubnzv/virtual-types.nvim'
-  use 'jiangmiao/auto-pairs'
   use 'lewis6991/gitsigns.nvim'
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-fzf-native.nvim' -- , { 'do': 'make' }
   use 'dhruvmanila/telescope-bookmarks.nvim'
-  use 'rmagatti/auto-session'
   use 'ThePrimeagen/refactoring.nvim'
 
+  -- use 'rmagatti/auto-session'
+  -- use 'jiangmiao/auto-pairs'
 
 	-- Auto set config if packer was auto installed
 	if Packer_Bootstrap then
