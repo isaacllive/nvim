@@ -16,7 +16,9 @@ cmp.setup({
   completion = {
     completeopt = 'menu,menuone,noinsert'
   },
-
+  perfomance = {
+    trigger_debounce_time = 500
+  },
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
