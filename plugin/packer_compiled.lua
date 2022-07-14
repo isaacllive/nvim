@@ -69,6 +69,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["FixCursorHold.nvim"] = {
+    loaded = true,
+    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/FixCursorHold.nvim",
+    url = "https://github.com/antoinemadec/FixCursorHold.nvim"
+  },
   LuaSnip = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/LuaSnip",
@@ -228,11 +233,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/sonokai",
     url = "https://github.com/sainnhe/sonokai"
-  },
-  ["telescope-bookmarks.nvim"] = {
-    loaded = true,
-    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/telescope-bookmarks.nvim",
-    url = "https://github.com/dhruvmanila/telescope-bookmarks.nvim"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,

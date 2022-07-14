@@ -18,7 +18,8 @@ require(PROFILE .. '.remaps')
 -----------------------------------------------------------------
 --  
 
-
-
+vim.cmd([[ 
+  au BufNewFile,BufRead *.html set filetype=html
+]])
 
 

@@ -13,13 +13,14 @@ if not cmp_ok then
 end
 
 cmp.setup({
+  completion = {
+    completeopt = 'menu,menuone,noinsert'
+  },
+
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      require('luasnip').lsp_expand(args.body)
     end,
   },
   window = {
@@ -27,6 +28,7 @@ cmp.setup({
     -- documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
+     
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
