@@ -41,12 +41,9 @@ cmp.setup({
   }, {
     { name = 'buffer', keyword_length = 3 },
     { name = 'omni', keyword_length = 3 },
-    { name = 'dictionary', keyword_length = 3 },
     { name = 'git', keyword_length = 5 },
     { name = 'path', keyword_length = 5 },
     { name = 'cmdline', keyword_length = 5 },
-    { name = 'cmdline_history', keyword_length = 5 },
-    -- { name = 'rg', keyword_length = 4 },
   })
 })
 
