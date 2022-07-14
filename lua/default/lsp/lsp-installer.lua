@@ -8,18 +8,15 @@ local servers = {
   "cssmodules_ls",
   "emmet_ls",
   "html",
-  "jdtls",
-  "jsonls",
-  "solc",
-  "sumneko_lua",
-  "tflint",
   "tsserver",
+  "intelephense",
   "pyright",
+  "sumneko_lua",
+  "rust_analyzer",
+  "clangd",
+  "jsonls",
   "yamlls",
   "bashls",
-  "clangd",
-  "rust_analyzer",
-  "taplo",
 }
 
 local settings = {
@@ -50,53 +47,44 @@ end
 local opts = {}
 
 for _, server in pairs(servers) do
+
   opts = {
-    on_attach = require("user.lsp.handlers").on_attach,
-    capabilities = require("user.lsp.handlers").capabilities,
+     on_attach =  require(PROFILE .. ".lsp.handlers").on_attach,
+     capabilities =  require(PROFILE .. ".lsp.handlers").capabilities,
   }
 
   if server == "jsonls" then
-    local jsonls_opts = require "user.lsp.settings.jsonls"
+    local jsonls_opts =  require(PROFILE .. ".lsp.settings.jsonls")
     opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
   end
 
   if server == "yamlls" then
-    local yamlls_opts = require "user.lsp.settings.yamlls"
+    local yamlls_opts =  require(PROFILE .. ".lsp.settings.yamlls")
     opts = vim.tbl_deep_extend("force", yamlls_opts, opts)
   end
 
   if server == "sumneko_lua" then
-    local sumneko_opts = require "user.lsp.settings.sumneko_lua"
+    local sumneko_opts =  require(PROFILE .. ".lsp.settings.sumneko_lua")
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
   end
 
   if server == "pyright" then
-    local pyright_opts = require "user.lsp.settings.pyright"
+    local pyright_opts =  require(PROFILE .. ".lsp.settings.pyright")
     opts = vim.tbl_deep_extend("force", pyright_opts, opts)
   end
 
-  if server == "solc" then
-    local solc_opts = require "user.lsp.settings.solc"
-    opts = vim.tbl_deep_extend("force", solc_opts, opts)
-  end
-
   if server == "emmet_ls" then
-    local emmet_ls_opts = require "user.lsp.settings.emmet_ls"
+    local emmet_ls_opts =  require(PROFILE .. ".lsp.settings.emmet_ls")
     opts = vim.tbl_deep_extend("force", emmet_ls_opts, opts)
   end
 
-  if server == "jdtls" then
-    goto continue
-  end
-
   if server == "rust_analyzer" then
-    local rust_opts = require "user.lsp.settings.rust"
+    local rust_opts =  require(PROFILE .. ".lsp.settings.rust")
 
     local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
     if not rust_tools_status_ok then
       return
     end
-
     rust_tools.setup(rust_opts)
     goto continue
   end

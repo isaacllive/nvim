@@ -1,4 +1,3 @@
-
 vim.cmd([[
 
   " Set up commands 
@@ -33,7 +32,7 @@ vim.cmd([[
   :set timeoutlen=500                      " By default timeoutlen is 1000 ms
   :set formatoptions-=cro                  " Stop newline continution of comments
   :set clipboard=unnamedplus               " Copy paste between vim and everything else
-  :set completeopt=menuone,noselect        " Suggestion macht longest
+  :set completeopt=menu,menuone,noselect   " Suggestion macht longest
   :set showcmd                             " Show commands that you type 
   :set confirm                             " Confirm when exiting without save
   :set lazyredraw                          " Speed up scrolling
@@ -46,11 +45,18 @@ vim.cmd([[
   :set foldlevel=0                         " Determine fold level
   :filetype plugin on                      " File type recognition for plugin files
   
-  :command! Close bufdo bd | q!                               " Fast Exit and clean up session
-
+  :command! Close bufdo bd | q!                               
   :command! ConfigFile e $MYVIMRC                             " Fast Main kConfig access
   :command! ConfigSSH e ~/.ssh/config                         " Fast SSH Config access
   :command! ConfigPlugins e ~/.config/nvim/lua/plugins.lua    " fast plugin config access
   :command! ConfigShell e $SHELL_RC                           " fast rc config access
 
 ]])
+
+vim.cmd('command! ConfigPlugins e ~/.config/nvim/lua/'.. PROFILE ..'/plugins.lua')
+
+-- vim.api.nvim_command(' command! Close bufdo bd | q! ') -- Fast Exit and clean up session
+-- vim.api.nvim_command(' command! Close bufdo bd | q! ') -- Fast Exit and clean up session
+-- vim.api.nvim_command(' command! Close bufdo bd | q! ') -- Fast Exit and clean up session
+-- vim.api.nvim_command(' command! Close bufdo bd | q! ') -- Fast Exit and clean up session
+-- vim.api.nvim_command(' command! Close bufdo bd | q! ') -- Fast Exit and clean up session

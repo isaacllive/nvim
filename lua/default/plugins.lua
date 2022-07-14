@@ -1,10 +1,10 @@
-
-
 local fn = vim.fn
- -- Auto install Packer.nvim if not found
-local	install_path = fn.stdpath('data')..'site/pack/packer/start/packer.nvim'
+
+-- Auto install Packer.nvim if not found
+local install_path = fn.stdpath('data') .. 'site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
- 	Packer_Bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  Packer_Bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+    install_path })
 end
 
 -- Auto Source This file on save
@@ -14,6 +14,7 @@ vim.cmd([[
     autocmd BufWritePost plugins.lua source <afile> | PackerCompile
   augroup end 
 ]])
+
 
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
@@ -26,15 +27,15 @@ packer.startup(function()
   -- packer itself
   use 'wbthomason/packer.nvim'
 
-  -- Required Libraries 
+  -- Required Libraries
   use 'nvim-lua/plenary.nvim'
   use 'nvim-lua/popup.nvim'
   use 'xolox/vim-misc'
   use 'RishabhRD/popfix'
 
-  -- Apearance 
+  -- Apearance
   use 'sainnhe/sonokai'
-  use 'ful1e5/onedark.nvim'
+  use 'navarasu/onedark.nvim'
   use 'kyazdani42/nvim-web-devicons'
   use 'ap/vim-css-color'
   use 'hoob3rt/lualine.nvim'
@@ -45,48 +46,57 @@ packer.startup(function()
   -- LSP
   use 'neovim/nvim-lspconfig'
   use 'williamboman/nvim-lsp-installer'
-  use 'hrsh7th/nvim-compe'
-  use 'RishabhRD/nvim-lsputils'
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'uga-rosa/cmp-dictionary'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-omni'
+  use 'hrsh7th/cmp-cmdline'
+  use 'dmitmel/cmp-cmdline-history'
+  use 'lukas-reineke/cmp-rg'
+  use 'petertriho/cmp-git'
+  use 'hrsh7th/nvim-cmp'
+
+  use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
+  use 'rafamadriz/friendly-snippets'
 
   -- Aditional  Functionality
   use 'lewis6991/impatient.nvim'
   use 'nvim-treesitter/nvim-treesitter'
   use 'folke/lsp-trouble.nvim'
   use 'kosayoda/nvim-lightbulb'
-  use 'onsails/lspkind-nvim'
+  use 'RRethy/vim-illuminate'
   use 'jubnzv/virtual-types.nvim'
   use 'lewis6991/gitsigns.nvim'
-  use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-fzf-native.nvim' -- , { 'do': 'make' }
+  use 'nvim-telescope/telescope.nvim'
   use 'dhruvmanila/telescope-bookmarks.nvim'
   use 'ThePrimeagen/refactoring.nvim'
 
   -- use 'rmagatti/auto-session'
   -- use 'jiangmiao/auto-pairs'
 
-	-- Auto set config if packer was auto installed
-	if Packer_Bootstrap then
-		 require('packer').sync()
-	end
+  -- Auto set config if packer was auto installed
+  if Packer_Bootstrap then
+    require('packer').sync()
+  end
 
 end)
 
 -- lua pluggin configurations
-require('plugin_configs.impatient')
-require('plugin_configs.dashboard')   -- TODO: DESIGN BETTER LOOKING PAGE
-require('plugin_configs.lsp')
-require('plugin_configs.lsputils')    -- TODO: CHECK CONF
-require('plugin_configs.treesitter')  -- TODO: CHECK CONF
-require('plugin_configs.refactoring') -- TODO: CHECK CONF
--- require('plugin_configs.telescope')   -- TODO: FIX ERRORS
-require('plugin_configs.compe')          -- TODO: CHECK CONF
-require('plugin_configs.lsptrouble')
-require('plugin_configs.gitsigns')
-require('plugin_configs.lspkind')
-require('plugin_configs.lualine')
-require('plugin_configs.neoscroll')
-require('plugin_configs.nvim-notify')
-require('plugin_configs.auto-session')
+-- require(PROFILE .. '.plugin_configs.lsp') MOVED to own folder
+-- require(PROFILE .. '.plugin_configs.lspkind')
+-- require(PROFILE .. '.plugin_configs.lsputils') -- TODO: CHECK CONF
 
-
-
+-- require(PROFILE .. '.plugin_configs.telescope')   -- TODO: FIX ERRORS
+require(PROFILE .. '.plugin_configs.impatient')
+require(PROFILE .. '.plugin_configs.dashboard') -- TODO: DESIGN BETTER LOOKING PAGE
+require(PROFILE .. '.plugin_configs.treesitter')
+require(PROFILE .. '.plugin_configs.refactoring')
+require(PROFILE .. '.plugin_configs.lsptrouble')
+require(PROFILE .. '.plugin_configs.gitsigns')
+require(PROFILE .. '.plugin_configs.lualine')
+require(PROFILE .. '.plugin_configs.neoscroll')
+require(PROFILE .. '.plugin_configs.nvim-notify')
+require(PROFILE .. '.plugin_configs.auto-session')
