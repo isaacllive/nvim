@@ -28,7 +28,7 @@ cmp.setup({
     -- documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-     
+
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
@@ -37,10 +37,10 @@ cmp.setup({
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'luasnip' }, -- For luasnip users.
+    { name = 'luasnip', keyword_length = 2 }, -- For luasnip users.
   }, {
-    { name = 'buffer', },
-    { name = 'omni' },
+    { name = 'buffer', keyword_length = 3 },
+    { name = 'omni', keyword_length = 3 },
     { name = 'dictionary', keyword_length = 3 },
     { name = 'git', keyword_length = 5 },
     { name = 'path', keyword_length = 5 },
