@@ -6,7 +6,6 @@ end
 local servers = {
   "cssls",
   "cssmodules_ls",
-  "emmet_ls",
   "html",
   "tsserver",
   "intelephense",
@@ -17,6 +16,7 @@ local servers = {
   "jsonls",
   "yamlls",
   "bashls",
+  -- "emmet_ls",
 }
 
 local settings = {
@@ -49,37 +49,42 @@ local opts = {}
 for _, server in pairs(servers) do
 
   opts = {
-     on_attach =  require(PROFILE .. ".lsp.handlers").on_attach,
-     capabilities =  require(PROFILE .. ".lsp.handlers").capabilities,
+    on_attach = require(PROFILE .. ".lsp.handlers").on_attach,
+    capabilities = require(PROFILE .. ".lsp.handlers").capabilities,
   }
 
   if server == "jsonls" then
-    local jsonls_opts =  require(PROFILE .. ".lsp.settings.jsonls")
+    local jsonls_opts = require(PROFILE .. ".lsp.settings.jsonls")
     opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
   end
 
   if server == "yamlls" then
-    local yamlls_opts =  require(PROFILE .. ".lsp.settings.yamlls")
+    local yamlls_opts = require(PROFILE .. ".lsp.settings.yamlls")
     opts = vim.tbl_deep_extend("force", yamlls_opts, opts)
   end
 
   if server == "sumneko_lua" then
-    local sumneko_opts =  require(PROFILE .. ".lsp.settings.sumneko_lua")
+    local sumneko_opts = require(PROFILE .. ".lsp.settings.sumneko_lua")
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
   end
 
   if server == "pyright" then
-    local pyright_opts =  require(PROFILE .. ".lsp.settings.pyright")
+    local pyright_opts = require(PROFILE .. ".lsp.settings.pyright")
     opts = vim.tbl_deep_extend("force", pyright_opts, opts)
   end
 
-  if server == "emmet_ls" then
-    local emmet_ls_opts =  require(PROFILE .. ".lsp.settings.emmet_ls")
-    opts = vim.tbl_deep_extend("force", emmet_ls_opts, opts)
+  -- if server == "emmet_ls" then
+  --   local emmet_ls_opts =  require(PROFILE .. ".lsp.settings.emmet_ls")
+  --   opts = vim.tbl_deep_extend("force", emmet_ls_opts, opts)
+  -- end
+
+  if server == "html" then
+    local html_opts = require(PROFILE .. ".lsp.settings.html")
+    opts = vim.tbl_deep_extend("force", html_opts, opts)
   end
 
   if server == "rust_analyzer" then
-    local rust_opts =  require(PROFILE .. ".lsp.settings.rust")
+    local rust_opts = require(PROFILE .. ".lsp.settings.rust")
 
     local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
     if not rust_tools_status_ok then

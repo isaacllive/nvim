@@ -5,7 +5,7 @@ return {
         version = "LuaJIT",
       },
       diagnostics = {
-        globals = { "vim", "use", "require" },
+        globals = { "vim", "use", "require", "pcall" },
       },
       workspace = {
         library = {
