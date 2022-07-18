@@ -14,7 +14,8 @@ end
 
 cmp.setup({
   completion = {
-    completeopt = 'menu,menuone,noinsert'
+    completeopt = 'menu,menuone,noinsert',
+    autocomplete = false,
   },
   perfomance = {
     trigger_debounce_time = 500
@@ -78,6 +79,13 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+
+vim.cmd([[
+  augroup CmpDebounceAuGroup
+    au!
+    au TextChangedI *  lua require(PROFILE .. ".lsp.debounce").debounce()
+  augroup end
+]])
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
