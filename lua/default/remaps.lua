@@ -29,10 +29,10 @@ vim.cmd([[
   :noremap <leader>bb :enew<CR>
   :noremap <leader>bd :bd<CR>
   
-  :noremap <leader>tp :tabprevious<CR>
-  :noremap <leader>tn :tabNext<CR>
-  :noremap <leader>td :tabclose<CR>
-  :noremap <leader>tt :tabnew<CR>
+  :noremap <leader>ttp :tabprevious<CR>
+  :noremap <leader>ttn :tabNext<CR>
+  :noremap <leader>ttd :tabclose<CR>
+  :noremap <leader>ttt :tabnew<CR>
   
   " Split Movement
   :noremap <A-j> <C-W>h<C-W><CR>
@@ -50,19 +50,19 @@ vim.cmd([[
   " :noremap gf :e <cfile><cr>
   
   " Telescope remaps
-  :nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-  :nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-  :nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-  :nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-  :nnoremap <leader>fc <cmd>lua require('telescope.builtin').commands()<cr>
-  :nnoremap <leader>r <cmd>lua require('telescope.builtin').lsp_references()<cr>
-  :nnoremap <leader>s <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
-  :nnoremap <leader>ss <cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>
-  :nnoremap <leader>c <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
-  :noremap  <leader>e <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
-  :nnoremap <leader>ee <cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>
-  :nnoremap <leader>i <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
-  :nnoremap <leader>d <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
+  :nnoremap <leader>tf <cmd>lua require('telescope.builtin').find_files()<cr>
+  :nnoremap <leader>tg <cmd>lua require('telescope.builtin').live_grep()<cr>
+  :nnoremap <leader>tb <cmd>lua require('telescope.builtin').buffers()<cr>
+  :nnoremap <leader>th <cmd>lua require('telescope.builtin').help_tags()<cr>
+  :nnoremap <leader>tc <cmd>lua require('telescope.builtin').commands()<cr>
+  :nnoremap <leader>tr <cmd>lua require('telescope.builtin').lsp_references()<cr>
+  :nnoremap <leader>ts <cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>
+  :nnoremap <leader>tss <cmd>lua require('telescope.builtin').lsp_workspace_symbols()<cr>
+  :nnoremap <leader>tc <cmd>lua require('telescope.builtin').lsp_code_actions()<cr>
+  :noremap  <leader>te <cmd>lua require('telescope.builtin').lsp_document_diagnostics()<cr>
+  :nnoremap <leader>tee <cmd>lua require('telescope.builtin').lsp_workspace_diagnostics()<cr>
+  :nnoremap <leader>ti <cmd>lua require('telescope.builtin').lsp_implementations()<cr>
+  :nnoremap <leader>td <cmd>lua require('telescope.builtin').lsp_definitions()<cr>
   
   " ----------------------------------------------------------------------------------------
   " Terminal Mode 

@@ -30,12 +30,15 @@ cmp.setup({
     -- documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
-
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
+    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+    ["<Tab>"] = cmp.mapping.select_next_item(),
+    ['<C-up>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-down>'] = cmp.mapping.scroll_docs(4),
     ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
@@ -196,5 +199,5 @@ function M.remove_augroup(name)
 end
 
 vim.cmd [[ command! LspToggleAutoFormat execute 'lua CustomRequire("lsp.handlers").toggle_format_on_save()' ]]
-
+    
 return M
