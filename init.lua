@@ -7,10 +7,10 @@
 PROFILE = 'default'
 require('shared')
 
+require(PROFILE .. '.styles')
 require(PROFILE .. '.functions')
 require(PROFILE .. '.plugins')
 require(PROFILE .. '.lsp')
-require(PROFILE .. '.styles')
 require(PROFILE .. '.settings')
 require(PROFILE .. '.remaps')
 

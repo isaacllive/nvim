@@ -1,4 +1,8 @@
 
+-----------------------------------------------------------------------------
+-- General style settings
+-----------------------------------------------------------------------------
+--
 vim.cmd([[
   :hi Pmenu blend=0
   set termguicolors
@@ -12,8 +16,14 @@ vim.cmd([[
   let g:netrw_liststyle = 3
 ]])
 
-
-local onedark = require('onedark')
+-----------------------------------------------------------------------------
+-- Theme settings
+-----------------------------------------------------------------------------
+--
+local status_ok, onedark = pcall(require, "onedark")
+if not status_ok then
+  return
+end
 
 onedark.setup({
   -- Main options --
