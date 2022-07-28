@@ -1,22 +1,5 @@
 
 -----------------------------------------------------------------------------
--- General style settings
------------------------------------------------------------------------------
---
-vim.cmd([[
-  :hi Pmenu blend=0
-  set termguicolors
-
-  " Netrw Modifications 
-  let g:netrw_keepdir = 0
-  let g:netrw_banner = 0
-  let g:netrw_browse_split = 0
-  let g:netrw_altv = 3
-  let g:netrw_winsize = 20
-  let g:netrw_liststyle = 3
-]])
-
------------------------------------------------------------------------------
 -- Theme settings
 -----------------------------------------------------------------------------
 --
@@ -60,4 +43,27 @@ onedark.setup({
 })
 
 onedark.load()
+
+-----------------------------------------------------------------------------
+-- General style settings
+-----------------------------------------------------------------------------
+--
+vim.cmd([[
+
+  :set termguicolors
+  :set laststatus=3
+
+  :hi Pmenu blend=0
+  :hi WinSeparator guibg=None
+
+  " Netrw Modifications 
+  let g:netrw_keepdir = 0
+  let g:netrw_banner = 0
+  let g:netrw_browse_split = 0
+  let g:netrw_altv = 3
+  let g:netrw_winsize = 20
+  let g:netrw_liststyle = 3
+
+]])
+
 

@@ -1,3 +1,4 @@
+
 local M = {}
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -16,9 +17,6 @@ cmp.setup({
   completion = {
     completeopt = 'menu,menuone,noinsert',
     autocomplete = false,
-  },
-  perfomance = {
-    trigger_debounce_time = 500
   },
   snippet = {
     -- REQUIRED - you must specify a snippet engine
@@ -50,7 +48,10 @@ cmp.setup({
     { name = 'git', keyword_length = 5 },
     { name = 'path', keyword_length = 5 },
     { name = 'cmdline', keyword_length = 5 },
-  })
+  }),
+  experimental = {
+    ghost_text = true;
+  }
 })
 
 -- Set configuration for specific filetype.
@@ -79,6 +80,12 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on(
+  'confirms',
+  cmp_autopairs.on_confirm_done()
+)
 
 vim.cmd([[
   augroup CmpDebounceAuGroup
@@ -175,6 +182,22 @@ M.on_attach = function(client, bufnr)
   -- TODO: refactor this into a method that checks if string in list
   lsp_keymaps(bufnr)
   lsp_highlight_document(client)
+
+  vim.api.nvim_create_autocmd("CursorHold", {
+  buffer = bufnr,
+  callback = function()
+    local opts = {
+      focusable = false,
+      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      border = 'rounded',
+      source = 'always',
+      prefix = ' ',
+      scope = 'cursor',
+    }
+    vim.diagnostic.open_float(nil, opts)
+  end
+
+})
 end
 
 function M.enable_format_on_save()
@@ -207,5 +230,5 @@ function M.remove_augroup(name)
 end
 
 vim.cmd [[ command! LspToggleAutoFormat execute 'lua CustomRequire("lsp.handlers").toggle_format_on_save()' ]]
-    
+
 return M
