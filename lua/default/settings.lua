@@ -2,7 +2,7 @@ vim.cmd([[
 
   " Set up commands 
   ":set syntax enable                      " Enables syntax highlighing
-  :set number                              " Line numbers
+  :set relativenumber                              " Line numbers
   :set mouse=a                             " Enable your mouse
   :set hidden                              " Required to keep multiple buffers open multiple buffers
   :set nowrap                              " Display long lines as just one line
@@ -55,8 +55,3 @@ vim.cmd([[
 
 vim.cmd('command! ConfigPlugins e ~/.config/nvim/lua/'.. PROFILE ..'/plugins.lua')
 
--- vim.api.nvim_command(' command! Close bufdo bd | q! ') -- Fast Exit and clean up session
--- vim.api.nvim_command(' command! Close bufdo bd | q! ') -- Fast Exit and clean up session
--- vim.api.nvim_command(' command! Close bufdo bd | q! ') -- Fast Exit and clean up session
--- vim.api.nvim_command(' command! Close bufdo bd | q! ') -- Fast Exit and clean up session
--- vim.api.nvim_command(' command! Close bufdo bd | q! ') -- Fast Exit and clean up session
