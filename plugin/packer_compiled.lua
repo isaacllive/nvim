@@ -135,11 +135,6 @@ _G.packer_plugins = {
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["dashboard-nvim"] = {
-    loaded = true,
-    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/dashboard-nvim",
-    url = "https://github.com/glepnir/dashboard-nvim"
-  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/friendly-snippets",
@@ -180,6 +175,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
+  },
+  ["nvim-highlight-colors"] = {
+    config = { "\27LJ\2\2\\\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0B\0\2\1K\0\1\0\1\0\1\vrender\15background\nsetup\26nvim-highlight-colors\frequire\0" },
+    loaded = true,
+    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/nvim-highlight-colors",
+    url = "https://github.com/brenoprata10/nvim-highlight-colors"
   },
   ["nvim-lightbulb"] = {
     loaded = true,
@@ -236,16 +237,6 @@ _G.packer_plugins = {
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
-  ["refactoring.nvim"] = {
-    loaded = true,
-    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/refactoring.nvim",
-    url = "https://github.com/ThePrimeagen/refactoring.nvim"
-  },
-  sonokai = {
-    loaded = true,
-    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/sonokai",
-    url = "https://github.com/sainnhe/sonokai"
-  },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/telescope-fzf-native.nvim",
@@ -257,11 +248,6 @@ _G.packer_plugins = {
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
-  ["vim-css-color"] = {
-    loaded = true,
-    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/vim-css-color",
-    url = "https://github.com/ap/vim-css-color"
-  },
   ["vim-illuminate"] = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/vim-illuminate",
@@ -272,6 +258,11 @@ _G.packer_plugins = {
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/vim-misc",
     url = "https://github.com/xolox/vim-misc"
   },
+  ["vim-prisma"] = {
+    loaded = true,
+    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/vim-prisma",
+    url = "https://github.com/pantharshit00/vim-prisma"
+  },
   ["virtual-types.nvim"] = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/virtual-types.nvim",
@@ -280,6 +271,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: nvim-highlight-colors
+time([[Config for nvim-highlight-colors]], true)
+try_loadstring("\27LJ\2\2\\\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0B\0\2\1K\0\1\0\1\0\1\vrender\15background\nsetup\26nvim-highlight-colors\frequire\0", "config", "nvim-highlight-colors")
+time([[Config for nvim-highlight-colors]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
 try_loadstring("\27LJ\2\2H\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0'\1\3\0B\0\2\1K\0\1\0\bfzf\19load_extension\14telescope\frequire\0", "config", "telescope.nvim")
