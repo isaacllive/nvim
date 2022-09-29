@@ -1,4 +1,3 @@
-
 vim.cmd([[
   function! g:Term()
     let currdir = getcwd()
@@ -26,28 +25,19 @@ vim.cmd([[
   endfunction
   set foldtext=NeatFoldText()
   " f~ 
-  
+
+
   " ---------------------------------------------------------------------------------------
   " Handles Termnial 
   " ---------------------------------------------------------------------------------------
-  :au BufEnter if &buftype == 'terminal' 
-    \  | :exec 'normal! i'                       " Always enter Terminal in insert mode 
-    \  | :set nonumber norelativenumber          " Removes side numbers when using terminal 
-    \  | endif   
+  :au BufEnter  if &buftype == 'terminal' 
+   \  |  setlocal nonumber norelativenumber
+   \  | :exec 'normal! i'                       " Always enter Terminal in insert mode 
+   \  | endif   
   
-  :au BufEnter  if &buftype != 'terminal' 
-    \  | :set relativenumber                             " Add numbers back when leaving terminal 
-    \  | endif  
   
-  :au BufNewFile  if &buftype != 'terminal' 
-    \  | :set relativenumber                             " Add numbers back when leaving terminal 
-    \  | endif  
-
-  :au TermOpen * startinsert 
-    \  | :set nonumber norelativenumber         " Insert mode when swiching to terminal 
+  :au TermOpen * setlocal nonumber norelativenumber          
     \  | :let g:terminal_scrollback_buffer_size = 1
-    \  | :noremap <buffer> <C-c> i<C-c>         " Allows for C-c escaping process in terminal
+    \  | :noremap <buffer> <C-c> i<C-c>         
   
 ]])
-
-

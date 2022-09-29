@@ -1,40 +1,35 @@
-local status_ok, lsp_installer = pcall(require, "nvim-lsp-installer")
+
+local status_ok, mason = pcall(require, "mason")
+if not status_ok then
+  return
+end
+
+mason.setup()
+
+local status_ok, lsp_installer = pcall(require, "mason-lspconfig")
 if not status_ok then
   return
 end
 
 local servers = {
+  "sumneko_lua",
   "cssls",
   "cssmodules_ls",
   "html",
   "tsserver",
   "intelephense",
   "pyright",
-  "sumneko_lua",
   "rust_analyzer",
   "clangd",
   "jsonls",
   "yamlls",
   "bashls",
-  -- "emmet_ls",
+  "volar"
 }
 
 local settings = {
   ensure_installed = servers,
-  ui = {
-    icons = {},
-    keymaps = {
-      toggle_server_expand = "<CR>",
-      install_server = "i",
-      update_server = "u",
-      check_server_version = "c",
-      update_all_servers = "U",
-      check_outdated_servers = "C",
-      uninstall_server = "X",
-    },
-  },
-
-  log_level = vim.log.levels.INFO,
+  automatic_installation = true,
 }
 
 lsp_installer.setup(settings)
@@ -73,11 +68,6 @@ for _, server in pairs(servers) do
     opts = vim.tbl_deep_extend("force", pyright_opts, opts)
   end
 
-  -- if server == "emmet_ls" then
-  --   local emmet_ls_opts =  require(PROFILE .. ".lsp.settings.emmet_ls")
-  --   opts = vim.tbl_deep_extend("force", emmet_ls_opts, opts)
-  -- end
-
   if server == "html" then
     local html_opts = require(PROFILE .. ".lsp.settings.html")
     opts = vim.tbl_deep_extend("force", html_opts, opts)
@@ -97,6 +87,3 @@ for _, server in pairs(servers) do
   lspconfig[server].setup(opts)
   ::continue::
 end
-
--- TODO: add something to installer later
--- require("lspconfig").motoko.setup {}

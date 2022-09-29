@@ -4,11 +4,6 @@ if not status_ok then
   return
 end
 
-local status_ok2, icons = pcall(require, "lsp_signature")
-if not status_ok2 then
-  return
-end
-
 local cfg = {
   debug = false, -- set to true to enable debug logging
   log_path = "debug_log_file_path", -- debug log path

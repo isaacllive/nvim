@@ -9,23 +9,26 @@ vim.api.nvim_command('packadd packer.nvim')
 
 local no_errors, error_msg = pcall(function()
 
-  local time
-  local profile_info
-  local should_profile = false
-  if should_profile then
-    local hrtime = vim.loop.hrtime
-    profile_info = {}
-    time = function(chunk, start)
-      if start then
-        profile_info[chunk] = hrtime()
-      else
-        profile_info[chunk] = (hrtime() - profile_info[chunk]) / 1e6
-      end
+_G._packer = _G._packer or {}
+_G._packer.inside_compile = true
+
+local time
+local profile_info
+local should_profile = false
+if should_profile then
+  local hrtime = vim.loop.hrtime
+  profile_info = {}
+  time = function(chunk, start)
+    if start then
+      profile_info[chunk] = hrtime()
+    else
+      profile_info[chunk] = (hrtime() - profile_info[chunk]) / 1e6
     end
-  else
-    time = function(chunk, start) end
   end
-  
+else
+  time = function(chunk, start) end
+end
+
 local function save_profiles(threshold)
   local sorted_times = {}
   for chunk_name, time_taken in pairs(profile_info) do
@@ -38,8 +41,10 @@ local function save_profiles(threshold)
       results[i] = elem[1] .. ' took ' .. elem[2] .. 'ms'
     end
   end
+  if threshold then
+    table.insert(results, '(Only showing plugins that took longer than ' .. threshold .. ' ms ' .. 'to load)')
+  end
 
-  _G._packer = _G._packer or {}
   _G._packer.profile_output = results
 end
 
@@ -141,26 +146,41 @@ _G.packer_plugins = {
     url = "https://github.com/rafamadriz/friendly-snippets"
   },
   ["gitsigns.nvim"] = {
+    config = { "\27LJ\2\2H\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\29.plugin_configs.gitsigns\fPROFILE\frequire\0" },
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
   ["impatient.nvim"] = {
+    config = { "\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.impatient\fPROFILE\frequire\0" },
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/impatient.nvim",
     url = "https://github.com/lewis6991/impatient.nvim"
   },
   ["lsp-trouble.nvim"] = {
+    config = { "\27LJ\2\2J\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\31.plugin_configs.lsptrouble\fPROFILE\frequire\0" },
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/lsp-trouble.nvim",
     url = "https://github.com/folke/lsp-trouble.nvim"
   },
   ["lualine.nvim"] = {
+    config = { "\27LJ\2\2G\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\28.plugin_configs.lualine\fPROFILE\frequire\0" },
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/hoob3rt/lualine.nvim"
   },
+  ["mason-lspconfig.nvim"] = {
+    loaded = true,
+    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
+    url = "https://github.com/williamboman/mason-lspconfig.nvim"
+  },
+  ["mason.nvim"] = {
+    loaded = true,
+    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/mason.nvim",
+    url = "https://github.com/williamboman/mason.nvim"
+  },
   ["neoscroll.nvim"] = {
+    config = { "\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.neoscroll\fPROFILE\frequire\0" },
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/neoscroll.nvim",
     url = "https://github.com/karb94/neoscroll.nvim"
@@ -183,14 +203,10 @@ _G.packer_plugins = {
     url = "https://github.com/brenoprata10/nvim-highlight-colors"
   },
   ["nvim-lightbulb"] = {
+    config = { "\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.lightbulb\fPROFILE\frequire\0" },
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/nvim-lightbulb",
     url = "https://github.com/kosayoda/nvim-lightbulb"
-  },
-  ["nvim-lsp-installer"] = {
-    loaded = true,
-    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
-    url = "https://github.com/williamboman/nvim-lsp-installer"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -198,11 +214,13 @@ _G.packer_plugins = {
     url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-notify"] = {
+    config = { "\27LJ\2\2K\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0 .plugin_configs.nvim-notify\fPROFILE\frequire\0" },
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/nvim-notify",
     url = "https://github.com/rcarriga/nvim-notify"
   },
   ["nvim-treesitter"] = {
+    config = { "\27LJ\2\2J\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\31.plugin_configs.treesitter\fPROFILE\frequire\0" },
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -271,22 +289,61 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: nvim-treesitter
+time([[Config for nvim-treesitter]], true)
+try_loadstring("\27LJ\2\2J\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\31.plugin_configs.treesitter\fPROFILE\frequire\0", "config", "nvim-treesitter")
+time([[Config for nvim-treesitter]], false)
 -- Config for: nvim-highlight-colors
 time([[Config for nvim-highlight-colors]], true)
 try_loadstring("\27LJ\2\2\\\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0B\0\2\1K\0\1\0\1\0\1\vrender\15background\nsetup\26nvim-highlight-colors\frequire\0", "config", "nvim-highlight-colors")
 time([[Config for nvim-highlight-colors]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-try_loadstring("\27LJ\2\2H\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0'\1\3\0B\0\2\1K\0\1\0\bfzf\19load_extension\14telescope\frequire\0", "config", "telescope.nvim")
-time([[Config for telescope.nvim]], false)
--- Config for: nvim-autopairs
-time([[Config for nvim-autopairs]], true)
-try_loadstring("\27LJ\2\2@\0\0\2\0\3\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0004\1\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
-time([[Config for nvim-autopairs]], false)
 -- Config for: Comment.nvim
 time([[Config for Comment.nvim]], true)
 try_loadstring("\27LJ\2\0025\0\0\2\0\3\0\0066\0\0\0'\1\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
 time([[Config for Comment.nvim]], false)
+-- Config for: impatient.nvim
+time([[Config for impatient.nvim]], true)
+try_loadstring("\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.impatient\fPROFILE\frequire\0", "config", "impatient.nvim")
+time([[Config for impatient.nvim]], false)
+-- Config for: telescope.nvim
+time([[Config for telescope.nvim]], true)
+try_loadstring("\27LJ\2\2H\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0'\1\3\0B\0\2\1K\0\1\0\bfzf\19load_extension\14telescope\frequire\0", "config", "telescope.nvim")
+time([[Config for telescope.nvim]], false)
+-- Config for: neoscroll.nvim
+time([[Config for neoscroll.nvim]], true)
+try_loadstring("\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.neoscroll\fPROFILE\frequire\0", "config", "neoscroll.nvim")
+time([[Config for neoscroll.nvim]], false)
+-- Config for: lualine.nvim
+time([[Config for lualine.nvim]], true)
+try_loadstring("\27LJ\2\2G\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\28.plugin_configs.lualine\fPROFILE\frequire\0", "config", "lualine.nvim")
+time([[Config for lualine.nvim]], false)
+-- Config for: lsp-trouble.nvim
+time([[Config for lsp-trouble.nvim]], true)
+try_loadstring("\27LJ\2\2J\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\31.plugin_configs.lsptrouble\fPROFILE\frequire\0", "config", "lsp-trouble.nvim")
+time([[Config for lsp-trouble.nvim]], false)
+-- Config for: nvim-lightbulb
+time([[Config for nvim-lightbulb]], true)
+try_loadstring("\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.lightbulb\fPROFILE\frequire\0", "config", "nvim-lightbulb")
+time([[Config for nvim-lightbulb]], false)
+-- Config for: nvim-notify
+time([[Config for nvim-notify]], true)
+try_loadstring("\27LJ\2\2K\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0 .plugin_configs.nvim-notify\fPROFILE\frequire\0", "config", "nvim-notify")
+time([[Config for nvim-notify]], false)
+-- Config for: nvim-autopairs
+time([[Config for nvim-autopairs]], true)
+try_loadstring("\27LJ\2\2@\0\0\2\0\3\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0004\1\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
+time([[Config for nvim-autopairs]], false)
+-- Config for: gitsigns.nvim
+time([[Config for gitsigns.nvim]], true)
+try_loadstring("\27LJ\2\2H\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\29.plugin_configs.gitsigns\fPROFILE\frequire\0", "config", "gitsigns.nvim")
+time([[Config for gitsigns.nvim]], false)
+
+_G._packer.inside_compile = false
+if _G._packer.needs_bufread == true then
+  vim.cmd("doautocmd BufRead")
+end
+_G._packer.needs_bufread = false
+
 if should_profile then save_profiles() end
 
 end)

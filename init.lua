@@ -23,9 +23,9 @@ vim.cmd([[
 ]])
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = function()
-    if vim.api.nvim_buf_get_name(0) == '' then
-      vim.cmd("set nonumber norelativenumber")
-      vim.cmd("terminal")
-    end
+  if vim.api.nvim_buf_get_name(0) == '' then
+    vim.cmd("terminal")
+    vim.cmd("setlocal norelativenumber")
   end
+end
 })
