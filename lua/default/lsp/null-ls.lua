@@ -16,10 +16,8 @@ null_ls.setup({
     diagnostics.zsh,
     diagnostics.stylelint,
     diagnostics.yamllint,
-    diagnostics.ansiblelint,
 
     formatting.stylua,
-    formatting.prettierd,
     formatting.stylelint,
     formatting.nginx_beautifier,
     formatting.shfmt,

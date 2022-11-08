@@ -21,7 +21,9 @@ if not status_ok then
   return
 end
 
+
 packer.startup(function()
+
   use 'wbthomason/packer.nvim'
 
   -- Required Libraries
@@ -35,8 +37,8 @@ packer.startup(function()
 
   use 'kyazdani42/nvim-web-devicons'
 
-  use { 'rcarriga/nvim-notify',
-    config = function() require(PROFILE .. '.plugin_configs.nvim-notify') end }
+  -- use { 'rcarriga/nvim-notify',
+  --   config = function() require(PROFILE .. '.plugin_configs.nvim-notify') end }
 
   use { 'hoob3rt/lualine.nvim',
     config = function() require(PROFILE .. '.plugin_configs.lualine') end }
@@ -66,6 +68,7 @@ packer.startup(function()
   use { 'L3MON4D3/LuaSnip' }
   use { 'saadparwaiz1/cmp_luasnip' }
   use { 'rafamadriz/friendly-snippets' }
+  use { 'b0o/schemastore.nvim' }
 
   -- Aditional  Functionality
   use { 'lewis6991/impatient.nvim',
@@ -97,6 +100,40 @@ packer.startup(function()
 
   use { "windwp/nvim-autopairs",
     config = function() require("nvim-autopairs").setup {} end }
+
+  use {
+    "folke/noice.nvim",
+    event = "VimEnter",
+    config = function()
+      require("noice").setup({
+        messages = {
+          enabled = true,
+          view = 'mini',
+          view_error = 'mini',
+          view_warn = 'mini'
+        },
+        cmdline = {
+          view = 'cmdline',
+          format = {
+            search_down = {
+              view = "cmdline"
+            },
+            search_up = {
+              view = "cmdline"
+            },
+          },
+        },
+      })
+    end,
+    requires = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --    If not available, we use `mini` as the fallback
+      -- "rcarriga/nvim-notify",
+    }
+  }
 
   -- use 'ThePrimeagen/refactoring.nvim'
 

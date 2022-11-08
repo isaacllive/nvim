@@ -185,6 +185,19 @@ _G.packer_plugins = {
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/neoscroll.nvim",
     url = "https://github.com/karb94/neoscroll.nvim"
   },
+  ["noice.nvim"] = {
+    config = { "\27LJ\2\2ø\1\0\0\5\0\14\0\0176\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\4\0005\2\3\0=\2\5\0015\2\6\0005\3\b\0005\4\a\0=\4\t\0035\4\n\0=\4\v\3=\3\f\2=\2\r\1B\0\2\1K\0\1\0\fcmdline\vformat\14search_up\1\0\1\tview\fcmdline\16search_down\1\0\0\1\0\1\tview\fcmdline\1\0\1\tview\fcmdline\rmessages\1\0\0\1\0\4\tview\tmini\15view_error\tmini\fenabled\2\14view_warn\tmini\nsetup\nnoice\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/home/isaac/.local/share/nvim/site/pack/packer/opt/noice.nvim",
+    url = "https://github.com/folke/noice.nvim"
+  },
+  ["nui.nvim"] = {
+    loaded = true,
+    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/nui.nvim",
+    url = "https://github.com/MunifTanjim/nui.nvim"
+  },
   ["nvim-autopairs"] = {
     config = { "\27LJ\2\2@\0\0\2\0\3\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0004\1\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0" },
     loaded = true,
@@ -212,12 +225,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
-  },
-  ["nvim-notify"] = {
-    config = { "\27LJ\2\2K\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0 .plugin_configs.nvim-notify\fPROFILE\frequire\0" },
-    loaded = true,
-    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/nvim-notify",
-    url = "https://github.com/rcarriga/nvim-notify"
   },
   ["nvim-treesitter"] = {
     config = { "\27LJ\2\2J\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\31.plugin_configs.treesitter\fPROFILE\frequire\0" },
@@ -254,6 +261,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/isaac/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
+  },
+  ["schemastore.nvim"] = {
+    loaded = true,
+    path = "/home/isaac/.local/share/nvim/site/pack/packer/start/schemastore.nvim",
+    url = "https://github.com/b0o/schemastore.nvim"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
@@ -297,22 +309,18 @@ time([[Config for nvim-treesitter]], false)
 time([[Config for nvim-highlight-colors]], true)
 try_loadstring("\27LJ\2\2\\\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0005\1\3\0B\0\2\1K\0\1\0\1\0\1\vrender\15background\nsetup\26nvim-highlight-colors\frequire\0", "config", "nvim-highlight-colors")
 time([[Config for nvim-highlight-colors]], false)
--- Config for: Comment.nvim
-time([[Config for Comment.nvim]], true)
-try_loadstring("\27LJ\2\0025\0\0\2\0\3\0\0066\0\0\0'\1\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
-time([[Config for Comment.nvim]], false)
 -- Config for: impatient.nvim
 time([[Config for impatient.nvim]], true)
 try_loadstring("\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.impatient\fPROFILE\frequire\0", "config", "impatient.nvim")
 time([[Config for impatient.nvim]], false)
+-- Config for: nvim-lightbulb
+time([[Config for nvim-lightbulb]], true)
+try_loadstring("\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.lightbulb\fPROFILE\frequire\0", "config", "nvim-lightbulb")
+time([[Config for nvim-lightbulb]], false)
 -- Config for: telescope.nvim
 time([[Config for telescope.nvim]], true)
 try_loadstring("\27LJ\2\2H\0\0\2\0\4\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0'\1\3\0B\0\2\1K\0\1\0\bfzf\19load_extension\14telescope\frequire\0", "config", "telescope.nvim")
 time([[Config for telescope.nvim]], false)
--- Config for: neoscroll.nvim
-time([[Config for neoscroll.nvim]], true)
-try_loadstring("\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.neoscroll\fPROFILE\frequire\0", "config", "neoscroll.nvim")
-time([[Config for neoscroll.nvim]], false)
 -- Config for: lualine.nvim
 time([[Config for lualine.nvim]], true)
 try_loadstring("\27LJ\2\2G\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\28.plugin_configs.lualine\fPROFILE\frequire\0", "config", "lualine.nvim")
@@ -321,14 +329,14 @@ time([[Config for lualine.nvim]], false)
 time([[Config for lsp-trouble.nvim]], true)
 try_loadstring("\27LJ\2\2J\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\31.plugin_configs.lsptrouble\fPROFILE\frequire\0", "config", "lsp-trouble.nvim")
 time([[Config for lsp-trouble.nvim]], false)
--- Config for: nvim-lightbulb
-time([[Config for nvim-lightbulb]], true)
-try_loadstring("\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.lightbulb\fPROFILE\frequire\0", "config", "nvim-lightbulb")
-time([[Config for nvim-lightbulb]], false)
--- Config for: nvim-notify
-time([[Config for nvim-notify]], true)
-try_loadstring("\27LJ\2\2K\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0 .plugin_configs.nvim-notify\fPROFILE\frequire\0", "config", "nvim-notify")
-time([[Config for nvim-notify]], false)
+-- Config for: neoscroll.nvim
+time([[Config for neoscroll.nvim]], true)
+try_loadstring("\27LJ\2\2I\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\30.plugin_configs.neoscroll\fPROFILE\frequire\0", "config", "neoscroll.nvim")
+time([[Config for neoscroll.nvim]], false)
+-- Config for: Comment.nvim
+time([[Config for Comment.nvim]], true)
+try_loadstring("\27LJ\2\0025\0\0\2\0\3\0\0066\0\0\0'\1\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
+time([[Config for Comment.nvim]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\2\2@\0\0\2\0\3\0\a6\0\0\0'\1\1\0B\0\2\0029\0\2\0004\1\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
@@ -337,6 +345,13 @@ time([[Config for nvim-autopairs]], false)
 time([[Config for gitsigns.nvim]], true)
 try_loadstring("\27LJ\2\2H\0\0\3\0\3\0\0066\0\0\0006\1\1\0'\2\2\0&\1\2\1B\0\2\1K\0\1\0\29.plugin_configs.gitsigns\fPROFILE\frequire\0", "config", "gitsigns.nvim")
 time([[Config for gitsigns.nvim]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Event lazy-loads
+time([[Defining lazy-load event autocommands]], true)
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'noice.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+time([[Defining lazy-load event autocommands]], false)
+vim.cmd("augroup END")
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

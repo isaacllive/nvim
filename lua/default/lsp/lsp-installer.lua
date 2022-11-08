@@ -1,4 +1,3 @@
-
 local status_ok, mason = pcall(require, "mason")
 if not status_ok then
   return
@@ -12,6 +11,8 @@ if not status_ok then
 end
 
 local servers = {
+  "jsonls",
+  "volar",
   "sumneko_lua",
   "cssls",
   "cssmodules_ls",
@@ -21,10 +22,8 @@ local servers = {
   "pyright",
   "rust_analyzer",
   "clangd",
-  "jsonls",
   "yamlls",
   "bashls",
-  "volar"
 }
 
 local settings = {
@@ -47,6 +46,11 @@ for _, server in pairs(servers) do
     on_attach = require(PROFILE .. ".lsp.handlers").on_attach,
     capabilities = require(PROFILE .. ".lsp.handlers").capabilities,
   }
+
+  if server == "volar" then
+    -- require 'lspconfig'.volar.setup {}
+    opts = vim.tbl_deep_extend("force", {}, opts)
+  end
 
   if server == "jsonls" then
     local jsonls_opts = require(PROFILE .. ".lsp.settings.jsonls")

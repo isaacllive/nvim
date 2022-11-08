@@ -1,40 +1,45 @@
+local icons = CustomRequire "icons"
 
--- local function currBuff()
---   return vim.api.nvim_exec([[ echo bufnr('%') ]], true)
--- end
+local function lspSummary()
+  local summary = ''
+  local errs = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+  local warns = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
 
-local function codeAction()
-  return require'nvim-lightbulb'.get_status_text()
+  if errs > 0 then
+    summary = summary .. icons.diagnostics.Error .. errs .. ' '
+  end
+  if warns > 0 then
+    summary = summary .. icons.diagnostics.Warning .. warns
+  end
+  return summary
 end
 
-local function session()
-  return require'auto-session-library'.current_session_name()
-end
-
-require'lualine'.setup {
-    options = {
-      icons_enabled = true,
-      theme = 'auto',
-      component_separators = {'', ''},
-      section_separators = {'', ''},
-      disabled_filetypes = {}
+require 'lualine'.setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { '', '' },
+    section_separators = { '', '' },
+    disabled_filetypes = {}
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch' },
+    lualine_c = {
+      { lspSummary }, 'filename',
     },
-    sections = {
-      lualine_a = {'mode'},
-      lualine_b = {'branch'},
-      lualine_c = {'filename'},
-      lualine_x = {{codeAction}, session, 'encoding','filetype'},
-      lualine_y = {'progress'},
-      lualine_z = {'location'}
+    lualine_x = { 'encoding', 'filetype',
     },
-    inactive_sections = {
-      lualine_a = {},
-      lualine_b = {},
-      lualine_c = {'filename'},
-      lualine_x = {},
-      lualine_y = {},
-      lualine_z = {}
-    },
-    extensions = {'fzf'}
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' }
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { 'filename' },
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  extensions = { 'fzf' }
 }
-

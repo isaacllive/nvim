@@ -22,7 +22,7 @@ vim.cmd([[
   :set expandtab                           " Converts tabs to spaces
   :set smartindent                         " Makes indenting smart
   :set autoindent                          " Good auto indent
-  :set laststatus=2                        " Always display the status line
+  :set laststatus=3                        " Always display the status line
   :set cursorline                          " Enable highlighting of the current line
   ":set background=dark                    " tell vim what the background color looks like
   :set showtabline=2                       " Present Airblade Status Line 
@@ -35,7 +35,7 @@ vim.cmd([[
   :set completeopt=menu,menuone,noselect   " Suggestion macht longest
   :set showcmd                             " Show commands that you type 
   :set confirm                             " Confirm when exiting without save
-  :set lazyredraw                          " Speed up scrolling
+  ":set lazyredraw                          " Speed up scrolling
   :set wmh=0
   :set noshowmode                          " Dont show mode covered by lighline
   :set shortmess+=c                        " Dont show 'pattern not found prompt 
@@ -44,7 +44,8 @@ vim.cmd([[
   :set foldmarker=~f,f~
   :set foldlevel=0                         " Determine fold level
   :filetype plugin on                      " File type recognition for plugin files
-  
+  "":set spell                               " Set lsp spellchack for comments
+
   :command! Close bufdo bd | q!                               
   :command! ConfigFile e $MYVIMRC                             " Fast Main kConfig access
   :command! ConfigSSH e ~/.ssh/config                         " Fast SSH Config access
@@ -53,5 +54,6 @@ vim.cmd([[
 
 ]])
 
-vim.cmd('command! ConfigPlugins e ~/.config/nvim/lua/'.. PROFILE ..'/plugins.lua')
+vim.o.ch = 0
 
+vim.cmd('command! ConfigPlugins e ~/.config/nvim/lua/' .. PROFILE .. '/plugins.lua')

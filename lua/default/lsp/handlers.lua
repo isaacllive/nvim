@@ -1,4 +1,3 @@
-
 local M = {}
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -40,7 +39,7 @@ cmp.setup({
     }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
   }),
   sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp', keyword_length = 2 },
     { name = 'luasnip', keyword_length = 3 }, -- For luasnip users.
   }, {
     { name = 'buffer', keyword_length = 3 },
@@ -96,7 +95,7 @@ vim.cmd([[
 require("luasnip.loaders.from_vscode").lazy_load()
 
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities = cmp_nvim_lsp.update_capabilities(M.capabilities)
+M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
 M.setup = function()
   local icons = CustomRequire "icons"
@@ -123,7 +122,7 @@ M.setup = function()
     underline = true,
     severity_sort = true,
     float = {
-      focusable = true,
+      focusable = false,
       style = "minimal",
       border = "rounded",
       source = "always",
@@ -183,20 +182,20 @@ M.on_attach = function(client, bufnr)
   lsp_highlight_document(client)
 
   vim.api.nvim_create_autocmd("CursorHold", {
-  buffer = bufnr,
-  callback = function()
-    local opts = {
-      focusable = false,
-      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-      border = 'rounded',
-      source = 'always',
-      prefix = ' ',
-      scope = 'cursor',
-    }
-    vim.diagnostic.open_float(nil, opts)
-  end
+    buffer = bufnr,
+    callback = function()
+      local opts = {
+        focusable = false,
+        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+        border = 'rounded',
+        source = 'always',
+        prefix = ' ',
+        scope = 'cursor',
+      }
+      vim.diagnostic.open_float(nil, opts)
+    end
 
-})
+  })
 end
 
 function M.enable_format_on_save()
