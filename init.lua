@@ -1,31 +1,17 @@
---
+
 ------------------------------------------------------------------
 -- Vim Index Configuration File
 ------------------------------------------------------------------
---
--- User can change chosen profile by editing this value
-PROFILE = 'default'
-require('shared')
 
-require(PROFILE .. '.styles')
-require(PROFILE .. '.functions')
-require(PROFILE .. '.plugins')
-require(PROFILE .. '.lsp')
-require(PROFILE .. '.settings')
-require(PROFILE .. '.remaps')
+PROFILE = 'default'        -- User can change chosen profile by editing this value
+require('shared')          -- Shared Code between profiles
 
+CustomRequire('custom')    -- autocommands functions custom commands
+CustomRequire('plugins')   -- load plgins
+CustomRequire('lsp')       -- load lsp features
+CustomRequire('remaps')    -- custom remaps
+CustomRequire('settings')  -- default vim settings 
+CustomRequire('styles')    -- stylings
 ------------------------------------------------------------------
 -----------------------------------------------------------------
---
 
-vim.cmd([[ 
-  au BufNewFile,BufRead *.html set filetype=html
-]])
-
-vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = function()
-  if vim.api.nvim_buf_get_name(0) == '' then
-    vim.cmd("terminal")
-    vim.cmd("setlocal norelativenumber")
-  end
-end
-})

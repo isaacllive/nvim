@@ -32,7 +32,7 @@ vim.cmd([[
   :set timeoutlen=500                      " By default timeoutlen is 1000 ms
   :set formatoptions-=cro                  " Stop newline continution of comments
   :set clipboard=unnamedplus               " Copy paste between vim and everything else
-  :set completeopt=menu,menuone,noselect   " Suggestion macht longest
+  ":set completeopt=menu,menuone,noselect   " Suggestion macht longest
   :set showcmd                             " Show commands that you type 
   :set confirm                             " Confirm when exiting without save
   ":set lazyredraw                          " Speed up scrolling

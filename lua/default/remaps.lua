@@ -1,7 +1,6 @@
-
 vim.cmd([[
 
-  " Remaping Leader
+  " Remapping Leader
   :let mapleader = " "
   
   " ----------------------------------------------------------------------------------------
@@ -26,7 +25,7 @@ vim.cmd([[
   " Tab-Bufferc Movement
   :noremap <leader>bp :bprevious<CR>
   :noremap <leader>bn :bnext<CR>
-  :noremap <leader>bb :enew<CR>
+  :noremap <leader>bb :new<CR>
   :noremap <leader>bd :bd<CR>
   
   :noremap <leader>ttp :tabprevious<CR>
@@ -78,8 +77,16 @@ vim.cmd([[
   "  Visual Mode 
   " ----------------------------------------------------------------------------------------
   " Yanking in visual mode copies text to win clipboard
-  :vnoremap <y> *y
+
+  :vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>
+  :vnoremap <y> y*
 
 ]])
 
-
+-- remap to open the Telescope refactoring menu in visual mode
+vim.api.nvim_set_keymap(
+  "v",
+  "<leader>tr",
+  "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+  { noremap = true }
+)
