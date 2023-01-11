@@ -1,7 +1,6 @@
 ------------------------------------------
 -- Where to place configs of plugins
 ------------------------------------------
-
 local configs = {}
 
 configs.example = function()
@@ -11,20 +10,32 @@ configs.example = function()
   end
 end
 
+configs.lazy = function()
+  local ok, _ = pcall(require, "lazy")
+  if ok then
+    return {
+      defaults = { lazy = true },
+      ui = {
+        size = { width = 0.9, height = 0.9 },
+        border = "rounded",
+        icons = CustomRequire('icons').lazy
+      }
+    }
+  end
+end
+
 configs.refactoring = function()
   local ok, refactoring = pcall(require, "refactoring")
-  if not ok then
-    return
+  if ok then
+    refactoring.setup()
   end
-  refactoring.setup({})
 end
 
 configs.surround = function()
   local ok, surround = pcall(require, "nvim-surround")
-  if not ok then
-    return
+  if ok then
+    surround.setup()
   end
-  surround.setup({})
 end
 
 configs.null_ls = function()
@@ -70,47 +81,45 @@ configs.cmp = function()
     return
   end
 
-  vim.opt.completeopt = { "menu", "preview", "menuone", "longest" }
+  local luasnip_ok, luasnip = pcall(require, "luasnip")
+  if not luasnip_ok then
+    return
+  end
+  require("luasnip/loaders/from_vscode").lazy_load()
 
-  require("luasnip.loaders.from_vscode").lazy_load()
-  local select_opts = { behavior = cmp.SelectBehavior.Select }
   cmp.setup({
-    snippet = {
-      expand = function(args)
-        require("luasnip").lsp_expand(args.body)
-      end,
-    },
-    window = {
-      completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
-    },
+    completion = { autocomplete = true },
     mapping = cmp.mapping.preset.insert({
       ["<Tab>"] = cmp.mapping(function(fallback)
-        local col = vim.fn.col(".") - 1
-
         if cmp.visible() then
-          cmp.select_next_item(select_opts)
-        elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-          fallback()
-        else
+          cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif HasCharBehindCursor() then
           cmp.complete()
+        else
+          fallback()
         end
-      end, { "i", "s" }),
+      end, { "i", "s", "c" }),
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          cmp.select_prev_item(select_opts)
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
         else
           fallback()
         end
       end, { "i", "s" }),
-      ["<C-up>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-down>"] = cmp.mapping.scroll_docs(4),
+      ["<C-Space>"] = cmp.mapping(function(fallback)
+        cmp.mapping.complete()
+      end, { "i", "s" }),
+
+      ["<C-k>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-l>"] = cmp.mapping.scroll_docs(4),
       ["<C-e>"] = cmp.mapping.abort(),
-      ["<CR>"] = cmp.mapping.confirm({
-        --behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
-      }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ["<CR>"] = cmp.mapping.confirm({ select = true }),
     }),
+
     sources = cmp.config.sources({
       { name = "nvim_lsp", keyword_length = 2 },
       { name = "luasnip", keyword_length = 3 }, -- For luasnip users.
@@ -120,11 +129,20 @@ configs.cmp = function()
       { name = "path", keyword_length = 5 },
       { name = "cmdline", keyword_length = 5 },
     }),
-    experimental = {
-      ghost_text = true,
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end,
     },
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
+    view = {
+      entries = { name = 'custom' },
+    },
+    experimental = { ghost_text = true, },
   })
-
   -- Set configuration for specific filetype.
   cmp.setup.filetype("gitcommit", {
     sources = cmp.config.sources({
@@ -133,7 +151,6 @@ configs.cmp = function()
       { name = "buffer" },
     }),
   })
-
   -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline("/", {
     mapping = cmp.mapping.preset.cmdline(),
@@ -141,8 +158,7 @@ configs.cmp = function()
       { name = "buffer" },
     },
   })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  -- Use cmdline &con path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(":", {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
@@ -152,30 +168,11 @@ configs.cmp = function()
     }),
   })
 
-  function Lsp_Debounce(DEBOUNCE_DELAY)
-    local timer = vim.loop.new_timer()
-    timer:start(
-      DEBOUNCE_DELAY,
-      0,
-      vim.schedule_wrap(function()
-        cmp.complete({ reason = cmp.ContextReason.Auto })
-      end)
-    )
-    timer:stop()
-  end
-
-  vim.cmd([[
-  augroup CmpDebounceAuGroup
-    au!
-    au TextChangedI *  lua Lsp_Debounce(500)
-  augroup end
-  ]])
-
   local autopair_ok, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
-  if not autopair_ok then
-    return
+  if autopair_ok then
+    cmp.event:on("confirms", cmp_autopairs.on_confirm_done())
   end
-  cmp.event:on("confirms", cmp_autopairs.on_confirm_done())
+
 end
 
 configs.neoscroll = function()
@@ -561,12 +558,19 @@ end
 
 configs.telescope = function()
   local ok, telescope = pcall(require, "telescope")
-  if not ok then
-    return
+  if ok then
+    telescope.setup({ extensions = {
+      fzf = {
+        fuzzy = true,
+        override_generic_sorter = true,
+        override_file_sorter = true,
+        case_mode = 'smartcase'
+      }
+    } })
+    -- telescope.load_extension('fzf')
+    telescope.load_extension('refactoring')
+    telescope.load_extension('projects')
   end
-
-  telescope.load_extension("fzf")
-  telescope.load_extension("refactoring")
 end
 
 configs.treesitter = function()
@@ -616,6 +620,7 @@ configs.autopairs = function()
 end
 
 configs.notify = function()
+
   local ok, notify = pcall(require, "notify")
   if not ok then
     return
@@ -644,9 +649,9 @@ configs.notify = function()
     minimum_width = 10,
     -- Icons for the different levels
     icons = {
-      ERROR = icons.diagnostic.error or " ",
-      WARN = icons.diagnostic.warning or " ",
-      INFO = icons.diagnostic.information or " ",
+      ERROR = icons.diagnostics.error or " ",
+      WARN = icons.diagnostics.warning or " ",
+      INFO = icons.diagnostics.information or " ",
       DEBUG = icons.ui.Bug or " ",
       TRACE = icons.ui.Pencil or "✎ ",
     },
@@ -659,7 +664,6 @@ configs.noice = function()
   if not ok then
     return
   end
-
   noice.setup({
     lsp = {
       override = {
@@ -667,10 +671,11 @@ configs.noice = function()
         ["vim.lsp.util.stylize_markdown"] = true,
         ["cmp.entry.get_documentation"] = true,
       },
+      signature = { enabled = false, }
     },
     presets = {
       bottom_search = true, -- use a classic bottom cmdline for search
-      command_palette = true, -- position the cmdline and popupmenu together
+      command_palette = false, -- position the cmdline and popupmenu together
       long_message_to_split = true, -- long messages will be sent to a split
       inc_rename = false, -- enables an input dialog for inc-rename.nvim
       lsp_doc_border = false, -- add a border to hover docs and signature help
@@ -693,6 +698,13 @@ configs.noice = function()
       },
     },
   })
+end
+
+configs.projects = function()
+  local ok, projects = pcall(require, "projects")
+  if ok then
+    projects.setup()
+  end
 end
 
 return configs

@@ -1,4 +1,3 @@
-
 vim.g.use_nerd_icons = true
 
 return {
@@ -101,5 +100,28 @@ return {
     Watch = " ",
     Smiley = " ",
     Package = " "
+  },
+  lazy = {
+    cmd = " ",
+    config = " ",
+    event = "",
+    ft = " ",
+    init = " ",
+    import = " ",
+    keys = " ",
+    lazy = "鈴 ",
+    loaded = "●",
+    not_loaded = "○",
+    plugin = " ",
+    runtime = " ",
+    source = " ",
+    start = "",
+    task = "✔ ",
+    list = {
+      "●",
+      "➜",
+      "★",
+      "‒",
+    },
   },
 }
