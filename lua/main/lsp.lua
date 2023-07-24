@@ -1,3 +1,4 @@
+
 local c1, lspconfig = pcall(require, "lspconfig")
 if not c1 then
   error("CUSTOM: lspconfig plugin not found, required for LSP")
@@ -18,7 +19,7 @@ if not c4 then
   error("CUSTOM: cmp_nvim_lsp plugin not found, required for LSP")
 end
 
-local servers = CustomRequire('ls_configs')
+local servers = CustomRequire('lsOpts')
 if (not servers) then
   error("CUSTOM: error language server files missing")
 end
@@ -76,7 +77,7 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
   { border = 'rounded' }
 )
 
-local icons = CustomRequire("icons")
+local icons = require("icons")
 if icons then
   Sign({ name = "DiagnosticSignError", text = icons.diagnostics.Error })
   Sign({ name = "DiagnosticSignWarn", text = icons.diagnostics.Warning })

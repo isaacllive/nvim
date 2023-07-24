@@ -2,11 +2,11 @@
 -- Where to place configs of plugins
 ------------------------------------------
 local configs = {}
-
+  
 configs.example = function()
   local ok, example = pcall(require, "example")
-  if not ok then
-    return
+  if ok then
+    return {}
   end
 end
 
@@ -14,11 +14,11 @@ configs.lazy = function()
   local ok, _ = pcall(require, "lazy")
   if ok then
     return {
-      defaults = { lazy = true },
+      defaults = { lazy = false },
       ui = {
         size = { width = 0.9, height = 0.9 },
         border = "rounded",
-        icons = CustomRequire('icons').lazy
+        icons = require('icons').lazy
       }
     }
   end
@@ -37,42 +37,37 @@ configs.surround = function()
     surround.setup()
   end
 end
-
 configs.null_ls = function()
   local ok, null_ls = pcall(require, "null-ls")
-  if not ok then
-    return
+  if ok then
+    local formatting = null_ls.builtins.formatting
+    local diagnostics = null_ls.builtins.diagnostics
+    local code_actions = null_ls.builtins.code_actions
+
+    null_ls.setup({
+      debug = false,
+      sources = {
+        diagnostics.shellcheck,
+        diagnostics.zsh,
+        diagnostics.yamllint,
+        diagnostics.eslint,
+
+        formatting.codespell,
+        formatting.eslint,
+
+        code_actions.gitsigns,
+        code_actions.refactoring,
+        code_actions.shellcheck,
+        code_actions.eslint,
+      },
+    })
   end
-
-  local formatting = null_ls.builtins.formatting
-  local diagnostics = null_ls.builtins.diagnostics
-  local code_actions = null_ls.builtins.code_actions
-
-  null_ls.setup({
-    debug = false,
-    sources = {
-      diagnostics.shellcheck,
-      diagnostics.zsh,
-      diagnostics.yamllint,
-      diagnostics.eslint,
-
-      formatting.codespell,
-      formatting.eslint,
-
-      code_actions.gitsigns,
-      code_actions.refactoring,
-      code_actions.shellcheck,
-      code_actions.eslint,
-    },
-  })
 end
-
 configs.signature = function()
   local ok, signature = pcall(require, "lsp_signature")
-  if not ok then
-    return
+  if ok then
+    signature.setup()
   end
-  signature.setup()
 end
 
 configs.cmp = function()
@@ -85,14 +80,31 @@ configs.cmp = function()
   if not luasnip_ok then
     return
   end
-  require("luasnip/loaders/from_vscode").lazy_load()
 
+  local formatting = {}
+  local lspkind_symbol_map = {}
+  local icons = require("icons")
+  local kind_ok, lspkind = pcall(require, "lspkind")
+  if kind_ok and icons then
+    formatting = {
+      format = lspkind.cmp_format({
+        mode = "symbol_text",
+        symbol_map = lspkind_symbol_map,
+      })
+    }
+  end
+
+  require("luasnip/loaders/from_vscode").lazy_load()
   cmp.setup({
-    completion = { autocomplete = true },
+    completion = {
+      autocomplete = false,
+      -- completeopt = 'menu,preview,menuone,longest'
+      completeopt = 'menu,menuone,longest'
+    },
     mapping = cmp.mapping.preset.insert({
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          cmp.select_next_item()
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
         elseif luasnip.expand_or_jumpable() then
           luasnip.expand_or_jump()
         elseif HasCharBehindCursor() then
@@ -103,30 +115,28 @@ configs.cmp = function()
       end, { "i", "s", "c" }),
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
+          cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+        elseif luasnip.jumpable( -1) then
+          luasnip.jump( -1)
         else
           fallback()
         end
       end, { "i", "s" }),
-      ["<C-Space>"] = cmp.mapping(function(fallback)
-        cmp.mapping.complete()
-      end, { "i", "s" }),
-
-      ["<C-k>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-l>"] = cmp.mapping.scroll_docs(4),
+      ["<up>"] = cmp.mapping.select_prev_item(),
+      ["<down>"] = cmp.mapping.select_next_item(),
+      ["<C-k>"] = cmp.mapping.scroll_docs(4),
+      ["<C-l>"] = cmp.mapping.scroll_docs( -4),
       ["<C-e>"] = cmp.mapping.abort(),
-      ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      ["<C-Space>"] = cmp.mapping.abort(),
+      ["<Space>"] = cmp.mapping.confirm({ select = true }),
     }),
-
     sources = cmp.config.sources({
       { name = "nvim_lsp", keyword_length = 2 },
-      { name = "luasnip", keyword_length = 3 }, -- For luasnip users.
+      { name = "luasnip",  keyword_length = 3 }, -- For luasnip users.
     }, {
-      { name = "buffer", keyword_length = 3 },
-      { name = "git", keyword_length = 5 },
-      { name = "path", keyword_length = 5 },
+      { name = "buffer",  keyword_length = 3 },
+      { name = "git",     keyword_length = 5 },
+      { name = "path",    keyword_length = 5 },
       { name = "cmdline", keyword_length = 5 },
     }),
     snippet = {
@@ -142,6 +152,7 @@ configs.cmp = function()
       entries = { name = 'custom' },
     },
     experimental = { ghost_text = true, },
+    formatting = formatting
   })
   -- Set configuration for specific filetype.
   cmp.setup.filetype("gitcommit", {
@@ -172,7 +183,6 @@ configs.cmp = function()
   if autopair_ok then
     cmp.event:on("confirms", cmp_autopairs.on_confirm_done())
   end
-
 end
 
 configs.neoscroll = function()
@@ -197,10 +207,9 @@ end
 
 configs.highlightColors = function()
   local ok, highlightColors = pcall(require, "nvim-highlight-colors")
-  if not ok then
-    return
+  if ok then
+    highlightColors.setup({ render = "background" })
   end
-  highlightColors.setup({ render = "background" })
 end
 
 configs.lualine = function()
@@ -210,7 +219,7 @@ configs.lualine = function()
   end
 
   local function lspSummary()
-    local icons = CustomRequire("icons")
+    local icons = require("icons")
     if not icons then
       error("CUSTOM: Icons not detected")
     end
@@ -226,23 +235,27 @@ configs.lualine = function()
     options = {
       icons_enabled = true,
       theme = "auto",
-      component_separators = { "", "" },
-      section_separators = { "", "" },
+      -- component_separators = { "|", "|" },
+      -- section_separators = { "|", "|" },
       disabled_filetypes = {},
     },
     sections = {
       lualine_a = { "mode" },
-      lualine_b = { "branch" },
+      lualine_b = { "branch", },
       lualine_c = {
         "filename",
       },
       lualine_x = { "encoding", "filetype" },
-      lualine_y = { { lspSummary }, "progress" },
-      lualine_z = { "location" },
+      lualine_y = { "div",
+        { "diagnostics",
+          always_visible = true,
+          sections = { 'error', 'warn', 'hint' }
+        }, },
+      lualine_z = { "progress", "location" },
     },
     inactive_sections = {
       lualine_a = {},
-      lualine_b = {},
+      lualine_b = { },
       lualine_c = { "filename" },
       lualine_x = {},
       lualine_y = {},
@@ -250,26 +263,28 @@ configs.lualine = function()
     },
     extensions = { "fzf" },
   })
-end
-configs.autosession = function()
-  local ok, session = pcall(require, "auto_session")
-  if not ok then
-    return
-  end
-  session.setup({
-    log_level = "info",
-    auto_session_enable_last_session = false,
-    auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
-    auto_session_enabled = true,
-    auto_save_enabled = nil,
-    auto_restore_enabled = nil,
-    auto_session_suppress_dirs = nil,
-    auto_session_use_git_branch = nil,
-    bypass_session_save_file_types = nil,
-  })
+  -- function() print(os.execute("tmux display-message -p '#I'")) end
 end
 
-configs.luasnip = function() end
+configs.autosession = function()
+  local ok, session = pcall(require, "auto_session")
+  if ok then
+    session.setup({
+      log_level = "info",
+      auto_session_enable_last_session = false,
+      auto_session_root_dir = vim.fn.stdpath("data") .. "/sessions/",
+      auto_session_enabled = true,
+      auto_save_enabled = nil,
+      auto_restore_enabled = nil,
+      auto_session_suppress_dirs = nil,
+      auto_session_use_git_branch = nil,
+      bypass_session_save_file_types = nil,
+    })
+  end
+end
+
+configs.luasnip = function()
+end
 
 configs.dashboard = function()
   local status_ok, db = pcall(require, "dashboard")
@@ -457,22 +472,22 @@ end
 
 configs.lspkind = function()
   local status_ok, lspkind = pcall(require, "lspkind")
-  if not status_ok then
+  if status_ok then
     return
   end
 
-  local icons = CustomRequire("icons")
-  if not icons then
-    error("CUSTOM: Icons not detected")
-  end
-
-  local lspkind_symbol_map = icons.kind
-
-  lspkind.init({
-    mode = "symbol_text",
-    preset = "codicons",
-    symbol_map = lspkind_symbol_map,
-  })
+  -- local icons = CustomRequire("icons")
+  -- if not icons then
+  --   error("CUSTOM: Icons not detected")
+  -- end
+  --
+  -- local lspkind_symbol_map = icons.kind
+  --
+  -- lspkind.init({
+  --   mode = "symbol_text",
+  --   preset = "codicons",
+  --   symbol_map = lspkind_symbol_map,
+  -- })
 end
 
 configs.trouble = function()
@@ -559,17 +574,17 @@ end
 configs.telescope = function()
   local ok, telescope = pcall(require, "telescope")
   if ok then
-    telescope.setup({ extensions = {
-      fzf = {
-        fuzzy = true,
-        override_generic_sorter = true,
-        override_file_sorter = true,
-        case_mode = 'smartcase'
+    telescope.setup({
+      extensions = {
+        fzf = {
+          fuzzy = true,
+          override_generic_sorter = true,
+          override_file_sorter = true,
+        }
       }
-    } })
-    -- telescope.load_extension('fzf')
-    telescope.load_extension('refactoring')
-    telescope.load_extension('projects')
+    })
+    telescope.load_extension('fzf')
+    --telescope.load_extension('refactoring')
   end
 end
 
@@ -613,20 +628,18 @@ end
 
 configs.autopairs = function()
   local ok, autopairs = pcall(require, "nvim-autopairs")
-  if not ok then
-    return
+  if ok then
+    autopairs.setup()
   end
-  autopairs.setup()
 end
 
 configs.notify = function()
-
   local ok, notify = pcall(require, "notify")
   if not ok then
     return
   end
 
-  local icons = CustomRequire("icons")
+  local icons = require("icons")
   if not icons then
     error("CUSTOM: Icons not detected")
   end
@@ -666,19 +679,21 @@ configs.noice = function()
   end
   noice.setup({
     lsp = {
+      signature = {
+        enabled = false
+      },
       override = {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
         ["vim.lsp.util.stylize_markdown"] = true,
         ["cmp.entry.get_documentation"] = true,
       },
-      signature = { enabled = false, }
     },
     presets = {
       bottom_search = true, -- use a classic bottom cmdline for search
       command_palette = false, -- position the cmdline and popupmenu together
       long_message_to_split = true, -- long messages will be sent to a split
       inc_rename = false, -- enables an input dialog for inc-rename.nvim
-      lsp_doc_border = false, -- add a border to hover docs and signature help
+      lsp_doc_border = true, -- add a border to hover docs and signature help
     },
     messages = {
       enabled = true,
@@ -688,22 +703,23 @@ configs.noice = function()
     },
     cmdline = {
       view = "cmdline",
-      format = {
-        search_down = {
-          view = "cmdline",
-        },
-        search_up = {
-          view = "cmdline",
-        },
-      },
     },
   })
 end
 
-configs.projects = function()
-  local ok, projects = pcall(require, "projects")
+configs.mason = function()
+  local ok, mason = pcall(require, "mason")
   if ok then
-    projects.setup()
+    mason.setup()
+  end
+end
+
+configs.projects = function()
+  local ok, projects = pcall(require, "project_nvim")
+  if ok then
+    projects.setup({
+      manual_mode = true
+    })
   end
 end
 

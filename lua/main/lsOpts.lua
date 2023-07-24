@@ -8,11 +8,7 @@ opts.cssls = function()
   return {}
 end
 
-opts.cssmodules_ls = function()
-  return {}
-end
-
-opts.intelephense = function()
+opts.phpactor = function()
   return {}
 end
 
@@ -44,23 +40,23 @@ opts.html = function()
   }
 end
 
+opts.tailwindcss = function()
+  return {}
+end
+
 opts.jsonls = function()
-  local status_ok, lspconfig = pcall(require, "lspconfig")
-  if not status_ok then
-    return {}
-  end
-  local status_ok2, schemastore = pcall(require, "schemastore")
-  if not status_ok2 then
-    return {}
-  end
-  return {
-    settings = {
-      json = {
-        schemas = schemastore.json.schemas(),
-        validate = { enable = true },
+  local ok, schemastore = pcall(require, "schemastore")
+  if ok then
+    return {
+      settings = {
+        json = {
+          schemas = schemastore.json.schemas(),
+          validate = { enable = true },
+        },
       },
-    },
-  }
+    }
+  else return {}
+  end
 end
 
 opts.yamlls = function()
@@ -170,7 +166,7 @@ opts.rust_analyzer = function()
 end
 
 
-opts['sumneko_lua'] = function()
+opts['lua_ls'] = function()
   return {
     settings = {
       Lua = {

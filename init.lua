@@ -9,25 +9,18 @@ PROFILE = 'main'
 -- Shared Code between profiles
 require('shared')
 
--- Load custom; cmds, autocmds, functions
-CustomRequire('custom')
-
--- load plugins
+CustomRequire('utils')
+CustomRequire('autocmds')
 CustomRequire('plugins')
-
--- Initialize Lsp Features
 CustomRequire('lsp')
-
--- Apply default vim settings
-CustomRequire('settings')
-
--- Apply default remaps
+CustomRequire('general')
 CustomRequire('remaps').setup() -- custom remaps
-
--- Apply style options
-CustomRequire('styles')
+CustomRequire('style')
 
 ------------------------------------------------------------------
 -- END
 ------------------------------------------------------------------
 --
+
+
+
