@@ -93,8 +93,6 @@ lazy.setup({
   -- Additional  Functionality
   ------------------------------------
   { "folke/zen-mode.nvim", },
-  { "vimwiki/vimwiki", },
-  { "iamcco/markdown-preview.nvim", },
   { "kylechui/nvim-surround",
     config = opts.surround,
   },
@@ -135,5 +133,9 @@ lazy.setup({
     config = opts.noice,
     dependencies = { "MunifTanjim/nui.nvim" },
     event = "vimenter",
+  },
+  { "mfussenegger/nvim-lint",
+    config = opts.lint,
   }
+
 }, opts.lazy())

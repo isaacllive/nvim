@@ -1,4 +1,3 @@
-
 local autocmd = vim.api.nvim_create_autocmd
 
 -- ---------------------------------------------------------------------------------------
@@ -21,11 +20,26 @@ autocmd({ "VimEnter" }, {
 
 autocmd('LspAttach', {
   desc = 'Enable LSP remaps when lsp attaches',
-  callback = function()
+  callback = function(args)
     local lspRemaps = CustomRequire('remaps').remaps.lsp
     lspRemaps.setup()
   end
 })
+
+-- autocmd("CursorHold", {
+--   desc = 'Automatically open lsp signatures',
+--   callback = function(args)
+--     local buf = args.buf
+--     local clients = vim.lsp.buf_get_clients();
+--     if next(clients) ~= nil then
+--      for client in clients do
+--       if client.supports_method('textDocument/signatureHelp') then
+--         vim.lsp.buf.signature_help()
+--       end
+--     end
+--     end
+--   end
+-- })
 
 autocmd("CursorHold", {
   desc = 'Automatically open diagnostics floats',
@@ -42,11 +56,13 @@ autocmd("CursorHold", {
   end
 })
 
-autocmd("CursorHold", {
-  desc = 'Automatically open lsp signatures',
-  callback = function()
-    vim.lsp.buf.signature_help()
-  end
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+ callback = function()
+   local ok, lint = pcall(require, "lint")
+   if not ok then
+     lint.try_lint()
+   end
+ end
 })
 
 vim.cmd([[
@@ -78,4 +94,3 @@ vim.cmd([[
     augroup END
   endif
 ]])
-

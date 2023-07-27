@@ -1,8 +1,9 @@
+
 ------------------------------------------
 -- Where to place configs of plugins
 ------------------------------------------
 local configs = {}
-  
+
 configs.example = function()
   local ok, example = pcall(require, "example")
   if ok then
@@ -116,8 +117,8 @@ configs.cmp = function()
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
-        elseif luasnip.jumpable( -1) then
-          luasnip.jump( -1)
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
         else
           fallback()
         end
@@ -125,7 +126,7 @@ configs.cmp = function()
       ["<up>"] = cmp.mapping.select_prev_item(),
       ["<down>"] = cmp.mapping.select_next_item(),
       ["<C-k>"] = cmp.mapping.scroll_docs(4),
-      ["<C-l>"] = cmp.mapping.scroll_docs( -4),
+      ["<C-l>"] = cmp.mapping.scroll_docs(-4),
       ["<C-e>"] = cmp.mapping.abort(),
       ["<C-Space>"] = cmp.mapping.abort(),
       ["<Space>"] = cmp.mapping.confirm({ select = true }),
@@ -194,14 +195,14 @@ configs.neoscroll = function()
   neoscroll.setup({
     -- All these keys will be mapped to their corresponding default scrolling animation
     mappings = { "<C-u>", "<C-d>", "<C-b>", "<C-f>", "<C-y>", "<C-e>", "zt", "zz", "zb" },
-    hide_cursor = true, -- Hide cursor while scrolling
-    stop_eof = true, -- Stop at <EOF> when scrolling downwards
+    hide_cursor = true,          -- Hide cursor while scrolling
+    stop_eof = true,             -- Stop at <EOF> when scrolling downwards
     use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
-    respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+    respect_scrolloff = false,   -- Stop scrolling when the cursor reaches the scrolloff margin of the file
     cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
-    easing_function = nil, -- Default easing function
-    pre_hook = nil, -- Function to run before the scrolling animation starts
-    post_hook = nil, -- Function to run after the scrolling animation ends
+    easing_function = nil,       -- Default easing function
+    pre_hook = nil,              -- Function to run before the scrolling animation starts
+    post_hook = nil,             -- Function to run after the scrolling animation ends
   })
 end
 
@@ -218,18 +219,10 @@ configs.lualine = function()
     return
   end
 
-  local function lspSummary()
     local icons = require("icons")
     if not icons then
       error("CUSTOM: Icons not detected")
     end
-    local summary = ""
-    local errs = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-    local warns = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
-    summary = summary .. icons.diagnostics.Error .. "" .. errs .. " "
-    summary = summary .. icons.diagnostics.Warning .. "" .. warns
-    return summary
-  end
 
   lualine.setup({
     options = {
@@ -241,21 +234,29 @@ configs.lualine = function()
     },
     sections = {
       lualine_a = { "mode" },
-      lualine_b = { "branch", },
+      lualine_b = { "branch"},
       lualine_c = {
-        "filename",
+        "filename"
       },
-      lualine_x = { "encoding", "filetype" },
-      lualine_y = { "div",
-        { "diagnostics",
+      lualine_x = { "filetype" },
+      lualine_y = { "diff",
+        {
+          "diagnostics",
           always_visible = true,
-          sections = { 'error', 'warn', 'hint' }
-        }, },
+          sections = { 'error', 'warn', 'hint' },
+          symbols = {
+           error = icons.diagnostics.Error,
+           warn = icons.diagnostics.Warning,
+           info = icons.diagnostics.Information,
+           hint = icons.diagnostics.Hint
+          },
+        },
+      },
       lualine_z = { "progress", "location" },
     },
     inactive_sections = {
       lualine_a = {},
-      lualine_b = { },
+      lualine_b = {},
       lualine_c = { "filename" },
       lualine_x = {},
       lualine_y = {},
@@ -372,8 +373,8 @@ configs.gitsigns = function()
       },
     },
     signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-    numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
-    linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+    numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
+    linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
     word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
     watch_gitdir = {
       interval = 1000,
@@ -497,8 +498,8 @@ configs.trouble = function()
   end
 
   trouble.setup({
-    fold_open = "v", -- icon used for open folds
-    fold_closed = ">", -- icon used for closed folds
+    fold_open = "v",      -- icon used for open folds
+    fold_closed = ">",    -- icon used for closed folds
     indent_lines = false, -- add an indent guide below the fold icons
     signs = {
       error = "error",
@@ -589,10 +590,17 @@ configs.telescope = function()
 end
 
 configs.treesitter = function()
-  local status_ok, treesitter = pcall(require, "nvim-treesitter.configs")
-  if not status_ok then
+  local ok1, treesitter = pcall(require, "nvim-treesitter.config")
+  if not ok1 then
     return
   end
+
+  local ok2, installer = pcall(require, "nvim-treesitter.install")
+  if not ok2 then
+    return
+  end
+
+  installer.prefer_git = true
 
   treesitter.setup({
     auto_install = true,
@@ -616,6 +624,7 @@ configs.treesitter = function()
       enable = true,
     },
   })
+
 end
 
 configs.comments = function()
@@ -689,11 +698,11 @@ configs.noice = function()
       },
     },
     presets = {
-      bottom_search = true, -- use a classic bottom cmdline for search
-      command_palette = false, -- position the cmdline and popupmenu together
+      bottom_search = true,         -- use a classic bottom cmdline for search
+      command_palette = false,      -- position the cmdline and popupmenu together
       long_message_to_split = true, -- long messages will be sent to a split
-      inc_rename = false, -- enables an input dialog for inc-rename.nvim
-      lsp_doc_border = true, -- add a border to hover docs and signature help
+      inc_rename = false,           -- enables an input dialog for inc-rename.nvim
+      lsp_doc_border = true,        -- add a border to hover docs and signature help
     },
     messages = {
       enabled = true,
@@ -723,4 +732,14 @@ configs.projects = function()
   end
 end
 
+configs.lint = function()
+  local ok, lint = pcall(require, "lint")
+  if ok then
+    lint.linters_by_ft = {
+      stylize_markdown = { 'vale' }
+    }
+  end
+end
+
 return configs
+

@@ -48,7 +48,6 @@ for serverName, setup in pairs(servers) do
     local currOpts = setup()
     opts = vim.tbl_deep_extend("force", currOpts, opts)
   end
-
   lspconfig[serverName].setup(opts)
 end
 
