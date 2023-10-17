@@ -1,14 +1,19 @@
+
 #!bin/bash
-
 apt install neovim
-
-# Install Plugin Manager
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # Install Ripgrep -- Faster Grep
 apt install ripgrep
 
+# for fzf native 
+apt install cmake
 
+npm install -g neovim
 
+apt install fd-find
 
+apt install unzip 
+
+apt install luarocks
+
+apt install composer 

@@ -1,4 +1,3 @@
-
 local c1, lspconfig = pcall(require, "lspconfig")
 if not c1 then
   error("CUSTOM: lspconfig plugin not found, required for LSP")

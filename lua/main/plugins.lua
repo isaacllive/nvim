@@ -10,26 +10,20 @@ if not opts then
   error("Plugin configs file not found")
 end
 
+local flatten = {
+  'willothy/flatten.nvim',
+  opts = { window = { open = 'current' } },
+  lazy = false,
+  priority = 1001,
+}
+
 -- If opening from inside neovim terminal then do not load all the other plugins
 if os.getenv("NVIM") ~= nil then
-  require('lazy').setup {
-    {
-      'willothy/flatten.nvim',
-      config = { window = { open = 'current' } },
-      lazy = false,
-      priority = 1001,
-    },
-  }
+  require('lazy').setup(flatten)
   return
 end
 
-lazy.setup({
-  {
-    'willothy/flatten.nvim',
-    config = { window = { open = 'current' } },
-    lazy = false,
-    priority = 1001,
-  },
+lazy.setup({ flatten,
   ------------------------------------
   -- Required Libraries
   ------------------------------------
@@ -39,17 +33,20 @@ lazy.setup({
   { "RishabhRD/popfix" },
 
   ------------------------------------
-  -- Features 
+  -- Features
   ------------------------------------
   { "navarasu/onedark.nvim" },
-  {'marko-cerovac/material.nvim'},
-  { "karb94/neoscroll.nvim",
+  { 'marko-cerovac/material.nvim' },
+  {
+    "karb94/neoscroll.nvim",
     config = opts.neoscroll,
   },
-  { "brenoprata10/nvim-highlight-colors",
+  {
+    "brenoprata10/nvim-highlight-colors",
     config = opts.highlightColors,
   },
-  { "hoob3rt/lualine.nvim",
+  {
+    "hoob3rt/lualine.nvim",
     config = opts.lualine,
     dependencies = {
       { "kyazdani42/nvim-web-devicons" },
@@ -82,50 +79,63 @@ lazy.setup({
   { "L3MON4D3/LuaSnip", },
   { "b0o/schemastore.nvim" },
   { "neovim/nvim-lspconfig", },
-  { "williamboman/mason.nvim",
+  {
+    "williamboman/mason.nvim",
     config = opts.mason,
   },
   { "williamboman/mason-lspconfig.nvim", },
-  { "jose-elias-alvarez/null-ls.nvim",
+  {
+    "jose-elias-alvarez/null-ls.nvim",
     config = opts.null_ls,
     enabled = false,
   },
-  { "ray-x/lsp_signature.nvim",
+  {
+    "ray-x/lsp_signature.nvim",
     config = opts.signature,
   },
   ------------------------------------
   -- Additional  Functionality
   ------------------------------------
   { "folke/zen-mode.nvim", },
-  { "kylechui/nvim-surround",
+  {
+    "kylechui/nvim-surround",
     config = opts.surround,
   },
-  { "nvim-treesitter/nvim-treesitter",
+  {
+    "nvim-treesitter/nvim-treesitter",
     config = opts.treesitter,
     enabled = true,
   },
-  { "folke/lsp-trouble.nvim",
+  {
+    "folke/lsp-trouble.nvim",
     config = opts.trouble
   },
-  { "lewis6991/gitsigns.nvim",
+  {
+    "lewis6991/gitsigns.nvim",
     config = opts.gitsigns,
   },
-  { "numToStr/Comment.nvim",
+  {
+    "numToStr/Comment.nvim",
     config = opts.comments,
   },
-  { "windwp/nvim-autopairs",
+  {
+    "windwp/nvim-autopairs",
     config = opts.autopairs,
   },
-  { "nvim-telescope/telescope.nvim",
+  {
+    "nvim-telescope/telescope.nvim",
     config = opts.telescope,
     dependencies = {
       { 'nvim-lua/plenary.nvim' },
-      { 'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make'
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build =
+        'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
       },
     },
   },
-  { "ThePrimeagen/refactoring.nvim",
+  {
+    "ThePrimeagen/refactoring.nvim",
     enabled = false,
     config = opts.refactoring,
     dependencies = {
@@ -133,17 +143,19 @@ lazy.setup({
       { "nvim-treesitter/nvim-treesitter" },
     },
   },
-  { "folke/noice.nvim",
+  {
+    "folke/noice.nvim",
     config = opts.noice,
     dependencies = { "MunifTanjim/nui.nvim" },
     event = "vimenter",
   },
-  { "mfussenegger/nvim-lint",
+  {
+    "mfussenegger/nvim-lint",
     config = opts.lint,
   },
 
   ------------------------------------
-  -- Colorschemes 
+  -- Colorschemes
   ------------------------------------
 
 
