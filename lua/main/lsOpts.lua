@@ -1,5 +1,9 @@
 local opts = {}
 
+opts.gopls = function()
+  return {}
+end
+
 opts.tsserver = function()
   return {}
 end

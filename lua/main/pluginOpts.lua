@@ -1,4 +1,3 @@
-
 ------------------------------------------
 -- Where to place configs of plugins
 ------------------------------------------
@@ -219,10 +218,10 @@ configs.lualine = function()
     return
   end
 
-    local icons = require("icons")
-    if not icons then
-      error("CUSTOM: Icons not detected")
-    end
+  local icons = require("icons")
+  if not icons then
+    error("CUSTOM: Icons not detected")
+  end
 
   lualine.setup({
     options = {
@@ -234,7 +233,7 @@ configs.lualine = function()
     },
     sections = {
       lualine_a = { "mode" },
-      lualine_b = { "branch"},
+      lualine_b = { "branch" },
       lualine_c = {
         "filename"
       },
@@ -245,10 +244,10 @@ configs.lualine = function()
           always_visible = true,
           sections = { 'error', 'warn', 'hint' },
           symbols = {
-           error = icons.diagnostics.Error,
-           warn = icons.diagnostics.Warning,
-           info = icons.diagnostics.Information,
-           hint = icons.diagnostics.Hint
+            error = icons.diagnostics.Error,
+            warn = icons.diagnostics.Warning,
+            info = icons.diagnostics.Information,
+            hint = icons.diagnostics.Hint
           },
         },
       },
@@ -576,6 +575,19 @@ configs.telescope = function()
   local ok, telescope = pcall(require, "telescope")
   if ok then
     telescope.setup({
+      defaults = {
+        vimgrep_arguments = {
+          'rg',
+          '--color=never',
+          '--no-heading',
+          '--with-filename',
+          '--line-number',
+          '--column',
+          '--smart-case',
+          '--ignore-file',
+          '.gitignore'
+        },
+      },
       extensions = {
         fzf = {
           fuzzy = true,
@@ -584,6 +596,7 @@ configs.telescope = function()
         }
       }
     })
+    --telescope.builtins.find_files({ hidden = true })
     telescope.load_extension('fzf')
     --telescope.load_extension('refactoring')
   end
@@ -624,7 +637,6 @@ configs.treesitter = function()
       enable = true,
     },
   })
-
 end
 
 configs.comments = function()
@@ -742,4 +754,3 @@ configs.lint = function()
 end
 
 return configs
-

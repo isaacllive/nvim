@@ -31,7 +31,7 @@ vim.cmd([[
   :set autoindent                          " Good auto indent
   :set laststatus=3                        " Always display the status line
   :set cursorline                          " Enable highlighting of the current line
-  :set background=dark                     " tell vim what the background color looks like
+  " :set background=dark                     " tell vim what the background color looks like
   :set showtabline=2                       " Present Airblade Status Line 
   :set nobackup                            " This is recommended by coc
   :set nowritebackup                       " This is recommended by coc
@@ -60,6 +60,7 @@ vim.cmd([[
 
 local usercmd = vim.api.nvim_create_user_command
 
+vim.cmd(":command! Clean :%s/\r//g")
 vim.cmd(":command! Format execute 'lua vim.lsp.buf.format({ async = true })'")
 vim.cmd(":command! Close bufdo bd | q!")
 vim.cmd(":command! EditSshConfig e ~/.ssh/config")

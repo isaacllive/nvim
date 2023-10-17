@@ -37,11 +37,12 @@ lazy.setup({
   { "nvim-lua/popup.nvim" },
   { "xolox/vim-misc" },
   { "RishabhRD/popfix" },
+
   ------------------------------------
-  -- Apearance
+  -- Features 
   ------------------------------------
   { "navarasu/onedark.nvim" },
-  { "pantharshit00/vim-prisma" },
+  {'marko-cerovac/material.nvim'},
   { "karb94/neoscroll.nvim",
     config = opts.neoscroll,
   },
@@ -54,6 +55,9 @@ lazy.setup({
       { "kyazdani42/nvim-web-devicons" },
     }
   },
+  { "tpope/vim-dadbod", },
+  { "kristijanhusak/vim-dadbod-ui", },
+  { "kristijanhusak/vim-dadbod-completion", },
   ------------------------------------
   -- LSP
   ------------------------------------
@@ -136,6 +140,11 @@ lazy.setup({
   },
   { "mfussenegger/nvim-lint",
     config = opts.lint,
-  }
+  },
+
+  ------------------------------------
+  -- Colorschemes 
+  ------------------------------------
+
 
 }, opts.lazy())

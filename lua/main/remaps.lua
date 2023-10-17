@@ -18,7 +18,6 @@ remaps.general = {
     vim.keymap.set('v', '*r', '"hy:%s/<C-r>h//g<left><left>', { desc = 'Enter replace prompt over selected text' })
     vim.keymap.set({ 'i' }, '<C-Space>', '<Nop>', { desc = 'Disable default behavior' })
     vim.keymap.set({ 'n' }, '<S-Tab>', '<C-o>', { desc = 'Reverse tab jump' })
-
   end
 }
 
