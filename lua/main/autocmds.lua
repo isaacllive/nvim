@@ -11,7 +11,7 @@ autocmd({ "VimEnter" }, {
       return
     else
       if vim.api.nvim_buf_get_name(0) == '' then
-        vim.cmd("terminal")
+        vim.cmd("terminal tmux")
         vim.cmd("setlocal norelativenumber")
       end
     end
