@@ -37,6 +37,7 @@ configs.surround = function()
     surround.setup()
   end
 end
+
 configs.null_ls = function()
   local ok, null_ls = pcall(require, "null-ls")
   if ok then
@@ -551,26 +552,8 @@ configs.treesitter = function()
   installer.prefer_git = true
 
   treesitter.setup({
+    ensure_installed = "all",
     auto_install = true,
-    highlight = {
-      enable = true,
-      custom_captures = {
-        ["foo.bar"] = "Identifier",
-      },
-      additional_vim_regex_highligthing = false,
-    },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "gnn",
-        node_incremental = "grn",
-        scope_incremental = "grc",
-        node_decremental = "grm",
-      },
-    },
-    indent = {
-      enable = true,
-    },
   })
 end
 
