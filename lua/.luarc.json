@@ -6,5 +6,8 @@
         "require",
         "pcall",
         "adfafs"
+    ],
+    "diagnostics.disable": [
+        "unused-local"
     ]
 }

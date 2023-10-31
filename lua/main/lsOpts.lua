@@ -44,9 +44,9 @@ opts.html = function()
   }
 end
 
-opts.tailwindcss = function()
-  return {}
-end
+-- opts.tailwindcss = function()
+--   return {}
+-- end
 
 opts.jsonls = function()
   local ok, schemastore = pcall(require, "schemastore")

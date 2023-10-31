@@ -52,6 +52,7 @@ lazy.setup({ flatten,
       { "kyazdani42/nvim-web-devicons" },
     }
   },
+  { 'kosayoda/nvim-lightbulb', config = opts.lightbulb },
   { "tpope/vim-dadbod", },
   { "kristijanhusak/vim-dadbod-ui", },
   { "kristijanhusak/vim-dadbod-completion", },
@@ -75,6 +76,13 @@ lazy.setup({ flatten,
       { "onsails/lspkind.nvim" },
     },
   },
+  {
+    "Jezda1337/nvim-html-css",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-lua/plenary.nvim" },
+    event = { "BufReadPost", "BufNewFile" },
+    config = opts.htmlcss 
+  },
+  { "nvim-treesitter/nvim-treesitter", config = opts.treesitter, },
   { "rafamadriz/friendly-snippets", },
   { "L3MON4D3/LuaSnip", },
   { "b0o/schemastore.nvim" },
@@ -85,9 +93,9 @@ lazy.setup({ flatten,
   },
   { "williamboman/mason-lspconfig.nvim", },
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    config = opts.null_ls,
-    enabled = false,
+    "nvimtools/none-ls.nvim",
+    config = opts.none_ls,
+    enabled = true,
   },
   {
     "ray-x/lsp_signature.nvim",
@@ -100,11 +108,6 @@ lazy.setup({ flatten,
   {
     "kylechui/nvim-surround",
     config = opts.surround,
-  },
-  {
-    "nvim-treesitter/nvim-treesitter",
-    config = opts.treesitter,
-    enabled = true,
   },
   {
     "folke/lsp-trouble.nvim",
@@ -132,11 +135,12 @@ lazy.setup({ flatten,
         build =
         'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
       },
+      { 'nvim-telescope/telescope-ui-select.nvim' },
     },
   },
   {
     "ThePrimeagen/refactoring.nvim",
-    enabled = false,
+    enabled = true,
     config = opts.refactoring,
     dependencies = {
       { "nvim-lua/plenary.nvim" },

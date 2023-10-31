@@ -37,6 +37,14 @@ configs.surround = function()
     surround.setup()
   end
 end
+
+configs.htmlcss = function()
+  local ok, htmlcss = pcall(require, "html-css")
+  if ok then
+    htmlcss:setup()
+  end
+end
+
 configs.null_ls = function()
   local ok, null_ls = pcall(require, "null-ls")
   if ok then
@@ -51,10 +59,8 @@ configs.null_ls = function()
         diagnostics.zsh,
         diagnostics.yamllint,
         diagnostics.eslint,
-
         formatting.codespell,
         formatting.eslint,
-
         code_actions.gitsigns,
         code_actions.refactoring,
         code_actions.shellcheck,
@@ -63,6 +69,7 @@ configs.null_ls = function()
     })
   end
 end
+
 configs.signature = function()
   local ok, signature = pcall(require, "lsp_signature")
   if ok then
@@ -75,24 +82,44 @@ configs.cmp = function()
   if not cmp_ok then
     return
   end
-
   local luasnip_ok, luasnip = pcall(require, "luasnip")
   if not luasnip_ok then
     return
   end
 
   local formatting = {}
-  local lspkind_symbol_map = {}
   local icons = require("icons")
+  local symbol_map = vim.tbl_deep_extend('force', {},
+    icons.ui, icons.git,
+    icons.kind, icons.lazy,
+    icons.misc, icons.type,
+    icons.diagnostics
+  );
   local kind_ok, lspkind = pcall(require, "lspkind")
   if kind_ok and icons then
-    formatting = {
+    formatting = vim.tbl_deep_extend('force', formatting, {
       format = lspkind.cmp_format({
         mode = "symbol_text",
-        symbol_map = lspkind_symbol_map,
+        symbol_map = symbol_map,
+        before = function(entry, vim_item)
+          if entry.source.name == "html-css" then
+            vim_item.menu = entry.completion_item.menu
+          end
+          return vim_item
+        end
       })
-    }
+    })
   end
+
+  -- local ok, _ = pcall(require, "html-css")
+  -- if ok then
+  --   formatting = vim.tbl_deep_extend('force', formatting, {
+  --     format = lspkind.cmp_format({
+  --       mode = "symbol_text",
+  --       symbol_map = lspkind_symbol_map,
+  --     })
+  --   })
+  -- end
 
   require("luasnip/loaders/from_vscode").lazy_load()
   cmp.setup({
@@ -130,15 +157,54 @@ configs.cmp = function()
       ["<C-Space>"] = cmp.mapping.abort(),
       ["<Space>"] = cmp.mapping.confirm({ select = true }),
     }),
+    -- sources = cmp.config.sources({
+    --   -- { name = "nvim_lsp", keyword_length = 2 },
+    --   -- { name = "luasnip",  keyword_length = 3 }, -- For luasnip users.
+    --   -- { name = "buffer",  keyword_length = 3 },
+    --   -- { name = "git",     keyword_length = 3 },
+    --   -- { name = "path",    keyword_length = 3 },
+    --   -- { name = "cmdline", keyword_length = 3 },
+    --   {
+    --     name = "html-css",
+    --     option = {
+    --       max_count = {}, -- not ready yet
+    --       enable_on = { "html" },                     -- set the file types you want the plugin to work on
+    --       file_extensions = { "css", "sass", "less" }, -- set the local filetypes from which you want to derive classes
+    --       style_sheets = {
+    --         -- example of remote styles, only css no js for now
+    --         "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
+    --       }
+    --     }
+    --   }
+    -- }),
+
     sources = cmp.config.sources({
-      { name = "nvim_lsp", keyword_length = 2 },
-      { name = "luasnip",  keyword_length = 3 }, -- For luasnip users.
+      { name = "nvim_lsp",               keyword_length = 2 },
+      { name = "luasnip",                keyword_length = 3, max_view_entries = 5 }, -- For luasnip users.
+      { name = "buffer",                 keyword_length = 3 },
+      { name = "git",                    keyword_length = 3 },
+      { name = "path",                   keyword_length = 3 },
+      { name = "cmdline",                keyword_length = 3 },
+      { name = "nvim_lsp_signature_help" },
+      {
+        name = "html-css",
+        option = {
+          max_count = {}, -- not ready yet
+          enable_on = {
+            "html",
+          },                                           -- set the file types you want the plugin to work on
+          file_extensions = { "css", "sass", "less" }, -- set the local filetypes from which you want to derive classes
+          style_sheets = {
+            -- example of remote styles, only css no js for now
+            "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css",
+            "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css",
+          },
+        },
+      },
     }, {
-      { name = "buffer",  keyword_length = 3 },
-      { name = "git",     keyword_length = 5 },
-      { name = "path",    keyword_length = 5 },
-      { name = "cmdline", keyword_length = 5 },
+      { name = "buffer", keyword_length = 5 },
     }),
+
     snippet = {
       expand = function(args)
         luasnip.lsp_expand(args.body)
@@ -367,40 +433,13 @@ configs.lightbulb = function()
   end
 
   lightbulb.setup({
-    -- LSP client names to ignore
-    -- Example: {"sumneko_lua", "null-ls"}
-    ignore = {},
-    sign = {
-      enabled = true,
-      -- Priority of the gutter sign
-      priority = 10,
-    },
-    float = {
-      enabled = false,
-      -- Text to show in the popup float
-      text = "💡",
-      win_opts = {},
-    },
-    virtual_text = {
-      enabled = false,
-      -- Text to show at virtual text
-      text = "💡",
-      -- highlight mode to use for virtual text (replace, combine, blend), see :help nvim_buf_set_extmark() for reference
-      hl_mode = "replace",
-    },
-    status_text = {
-      enabled = false,
-      -- Text to provide when code actions are available
-      text = "💡",
-      -- Text to provide when no actions are available
-      text_unavailable = "",
-    },
     autocmd = {
       enabled = true,
-      -- see :help autocmd-pattern
-      pattern = { "*" },
-      -- see :help autocmd-events
-      events = { "CursorHold", "CursorHoldI" },
+    },
+    number = {
+      enabled = false,
+      -- Highlight group to highlight the number column if there is a lightbulb.
+      hl = "LightBulbNumber",
     },
   })
 end
@@ -528,12 +567,18 @@ configs.telescope = function()
           fuzzy = true,
           override_generic_sorter = true,
           override_file_sorter = true,
+        },
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown {
+            -- even more opts
+          }
         }
       }
     })
     --telescope.builtins.find_files({ hidden = true })
     telescope.load_extension('fzf')
-    --telescope.load_extension('refactoring')
+    telescope.load_extension('ui-select')
+    telescope.load_extension('refactoring')
   end
 end
 
