@@ -9,6 +9,9 @@ PROFILE = 'main'
 -- Shared Code between profiles
 require('shared')
 
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
 CustomRequire('utils')
 CustomRequire('autocmds')
 CustomRequire('plugins')

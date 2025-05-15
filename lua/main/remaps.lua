@@ -3,7 +3,9 @@ local remaps = {}
 remaps.general = {
   autoload = true,
   setup = function()
-    vim.g.mapleader = ' ' -- Remapping Leader
+    vim.keymap.set("n", " ", "<Nop>", { silent = true, remap = false })
+    vim.g.mapleader = " "
+    vim.g.maplocalleader = "\\"
     vim.keymap.set({ 'i' }, 'kk', '<Esc>', { desc = 'Fast exit to normal mode' })
     vim.keymap.set({ 'i' }, 'kk', '<Esc>', { desc = 'Fast exit to normal mode' })
     vim.keymap.set('', 'j', '<Left>', { desc = 'Change default LEFT movement' })
@@ -23,7 +25,7 @@ remaps.general = {
 }
 
 remaps.lsp = {
-  autoload = false,  -- Loaded when lsp attaches
+  autoload = false, -- Loaded when lsp attaches
   setup = function()
     vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end,
       { desc = 'Document Format' })
@@ -41,8 +43,8 @@ remaps.lsp = {
     vim.keymap.set('n', '<leader>ca', function() vim.lsp.buf.code_action() end, { desc = '' })
     vim.keymap.set('v', '<leader>ca', function() vim.lsp.buf.range_code_action() end, { desc = '' })
     vim.keymap.set('n', '<leader>o', function() vim.diagnostic.open_float() end, { desc = '' })
-    vim.keymap.set('n', '<leader>dp', function() vim.diagnostic.goto_prev() end, { desc = '' })
-    vim.keymap.set('n', '<leader>dn', function() vim.diagnostic.goto_next() end, { desc = '' })
+    vim.keymap.set('n', '<leader>dp', function() vim.diagnostic.get_next() end, { desc = '' })
+    vim.keymap.set('n', '<leader>dn', function() vim.diagnostic.get_prev() end, { desc = '' })
   end,
 }
 
@@ -52,7 +54,7 @@ remaps.plugins = {
     local ok, telescope = pcall(require, 'telescope')
     if ok then
       local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<leader>tf', function() builtin.find_files({ no_ignore = true }) end,{ desc = 'Telescope find files' })
+      vim.keymap.set('n', '<leader>tf', function() builtin.find_files({ no_ignore = true }) end, { desc = 'Telescope find files' })
       vim.keymap.set('n', '<leader>tg', function() builtin.live_grep() end, { desc = 'Telescope grep files' })
       vim.keymap.set('n', '<leader>tb', function() builtin.buffers() end, { desc = 'Telescope find buffer' })
       vim.keymap.set('n', '<leader>th', function() builtin.help_tags() end, { desc = 'Telescope search help tags' })
@@ -64,16 +66,12 @@ remaps.plugins = {
       vim.keymap.set('n', '<leader>tee', function() builtin.lsp_workspace_diagnostics() end, { desc = 'Telescope view worspace diagnostics' })
       vim.keymap.set('n', '<leader>ti', function() builtin.lsp_implementations() end, { desc = 'Telescope view implementations' })
       vim.keymap.set('n', '<leader>td', function() builtin.lsp_definitions() end, { desc = 'Telescope view definitions' })
-      -- vim.keymap.set('n', '<leader>tp', function() telescope.extensions.projects.projects({}) end, { desc = '' })
-      vim.keymap.set('v', '<leader>tr', function() telescope.extensions.refactoring.refactors() end, { desc = 'View all refactors available', noremap = true })
+      vim.keymap.set('v', '<leader>tr', function() telescope.extensions.refactoring.refactors() end,
+        { desc = 'View all refactors available', noremap = true })
     end
-
-    vim.keymap.set({ 'n' }, '<leader>j', function() vim.cmd('VimwikiIndex') end,
-      { desc = 'Shortcut for opening vimwiki' })
 
     vim.keymap.set('n', '<leader>mp', function() vim.cmd('MarkdownPreview') end,
       { desc = 'Shortcut for viewing markdown preview' })
-
   end
 }
 

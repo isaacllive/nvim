@@ -10,8 +10,10 @@ autocmd({ "VimEnter" }, {
       vim.cmd("q!")
       return
     else
+      vim.cmd("TSInstall all");
+
       if vim.api.nvim_buf_get_name(0) == '' then
-        vim.cmd("terminal tmux attach || tmux")
+        vim.cmd("term")
         vim.cmd("setlocal norelativenumber")
       end
     end
@@ -25,21 +27,6 @@ autocmd('LspAttach', {
     lspRemaps.setup()
   end
 })
-
--- autocmd("CursorHold", {
---   desc = 'Automatically open lsp signatures',
---   callback = function(args)
---     local buf = args.buf
---     local clients = vim.lsp.buf_get_clients();
---     if next(clients) ~= nil then
---      for client in clients do
---       if client.supports_method('textDocument/signatureHelp') then
---         vim.lsp.buf.signature_help()
---       end
---     end
---     end
---   end
--- })
 
 autocmd("CursorHold", {
   desc = 'Automatically open diagnostics floats',
