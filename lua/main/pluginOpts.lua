@@ -505,6 +505,9 @@ configs.telescope = function()
   if ok then
     telescope.setup({
       defaults = {
+        file_ignore_patterns = {
+          "node_modules"
+        },
         vimgrep_arguments = {
           'rg',
           '--color=never',
@@ -533,7 +536,6 @@ configs.telescope = function()
     --telescope.builtins.find_files({ hidden = true })
     telescope.load_extension('fzf')
     telescope.load_extension('ui-select')
-    telescope.load_extension('refactoring')
   end
 end
 

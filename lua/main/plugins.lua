@@ -37,28 +37,52 @@ lazy.setup({ flatten,
   ------------------------------------
   { "navarasu/onedark.nvim" },
   { 'marko-cerovac/material.nvim' },
-  {
-    "karb94/neoscroll.nvim",
-    config = opts.neoscroll,
-  },
-  {
-    "brenoprata10/nvim-highlight-colors",
-    config = opts.highlightColors,
-  },
-  {
-    "hoob3rt/lualine.nvim",
-    config = opts.lualine,
-    dependencies = {
-      { "kyazdani42/nvim-web-devicons" },
-    }
-  },
-  { 'kosayoda/nvim-lightbulb', config = opts.lightbulb },
+  { "nvim-treesitter/nvim-treesitter",      config = opts.treesitter, },
+  { "karb94/neoscroll.nvim",                config = opts.neoscroll, },
+  { "brenoprata10/nvim-highlight-colors",   config = opts.highlightColors, },
+  { 'kosayoda/nvim-lightbulb',              config = opts.lightbulb },
   { "tpope/vim-dadbod", },
   { "kristijanhusak/vim-dadbod-ui", },
   { "kristijanhusak/vim-dadbod-completion", },
+  { "mfussenegger/nvim-lint",               config = opts.lint, },
+  { "hoob3rt/lualine.nvim",                 config = opts.lualine,         dependencies = { { "kyazdani42/nvim-web-devicons" }, } },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r",     mode = { "o" },           function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+    },
+  },
   ------------------------------------
   -- LSP
   ------------------------------------
+  { "rafamadriz/friendly-snippets", },
+  { "L3MON4D3/LuaSnip", },
+  { "b0o/schemastore.nvim" },
+  { "nvimtools/none-ls.nvim",            config = opts.none_ls,   enabled = true, },
+  { "ray-x/lsp_signature.nvim",          config = opts.signature, },
+  { "kylechui/nvim-surround",            config = opts.surround, },
+  { "folke/lsp-trouble.nvim",            config = opts.trouble },
+  { "lewis6991/gitsigns.nvim",           config = opts.gitsigns, },
+  { "numToStr/Comment.nvim",             config = opts.comments, },
+  { "windwp/nvim-autopairs",             config = opts.autopairs, },
+  { "neovim/nvim-lspconfig", },
+  { "williamboman/mason.nvim",           config = opts.mason, },
+  { "williamboman/mason-lspconfig.nvim", },
+  {
+    "nvim-telescope/telescope.nvim",
+    config = opts.telescope,
+    dependencies = {
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
+      { 'nvim-telescope/telescope-ui-select.nvim' },
+    },
+  },
   {
     "hrsh7th/nvim-cmp",
     config = opts.cmp,
@@ -78,89 +102,9 @@ lazy.setup({ flatten,
   },
   {
     "Jezda1337/nvim-html-css",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-lua/plenary.nvim" },
+    config = opts.htmlcss,
     event = { "BufReadPost", "BufNewFile" },
-    config = opts.htmlcss 
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-lua/plenary.nvim" },
   },
-  { "nvim-treesitter/nvim-treesitter", config = opts.treesitter, },
-  { "rafamadriz/friendly-snippets", },
-  { "L3MON4D3/LuaSnip", },
-  { "b0o/schemastore.nvim" },
-  { "neovim/nvim-lspconfig", },
-  {
-    "williamboman/mason.nvim",
-    config = opts.mason,
-  },
-  { "williamboman/mason-lspconfig.nvim", },
-  {
-    "nvimtools/none-ls.nvim",
-    config = opts.none_ls,
-    enabled = true,
-  },
-  {
-    "ray-x/lsp_signature.nvim",
-    config = opts.signature,
-  },
-  ------------------------------------
-  -- Additional  Functionality
-  ------------------------------------
-  { "folke/zen-mode.nvim", },
-  {
-    "kylechui/nvim-surround",
-    config = opts.surround,
-  },
-  {
-    "folke/lsp-trouble.nvim",
-    config = opts.trouble
-  },
-  {
-    "lewis6991/gitsigns.nvim",
-    config = opts.gitsigns,
-  },
-  {
-    "numToStr/Comment.nvim",
-    config = opts.comments,
-  },
-  {
-    "windwp/nvim-autopairs",
-    config = opts.autopairs,
-  },
-  {
-    "nvim-telescope/telescope.nvim",
-    config = opts.telescope,
-    dependencies = {
-      { 'nvim-lua/plenary.nvim' },
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build =
-        'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
-      },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
-    },
-  },
-  {
-    "ThePrimeagen/refactoring.nvim",
-    enabled = true,
-    config = opts.refactoring,
-    dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-treesitter/nvim-treesitter" },
-    },
-  },
-  {
-    "folke/noice.nvim",
-    config = opts.noice,
-    dependencies = { "MunifTanjim/nui.nvim" },
-    event = "vimenter",
-  },
-  {
-    "mfussenegger/nvim-lint",
-    config = opts.lint,
-  },
-
-  ------------------------------------
-  -- Colorschemes
-  ------------------------------------
-
 
 }, opts.lazy())
